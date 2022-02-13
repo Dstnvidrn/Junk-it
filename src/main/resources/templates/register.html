@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<link href="/css/favicon.ico" rel="icon" type="image/x-icon" />
+		<link rel="stylesheet" href="/css/stylesheet.css" >
+		<title>Sign up today!</title>
+	</head>
+	
+	<!-- rgb(128, 119, 102) -->
+	<body style="background-color: rgb(128, 119, 102)">
+
+		<nav></nav>
+		<div align="center">
+			<h1>Sign up today to get the latest junk trades!</h1>
+		</div>
+		<hr>
+	<div align="center" style="margin: 180px">
+		<form th:action="@{/register}" method="post">
+			<input class="inputFields" type="text" th:field="${user.firstName}" placeholder="First Name"/><br/>
+			<input class="inputFields" type="text" th:field="${user.lastName}" placeholder="Last Name"/><br/>
+			<input class="inputFields" type="password" th:field="${user.password}" placeholder="Password"/><br/>
+			<input class="inputFields" type="text" th:field="${user.email}" placeholder="Email Address"/><br/>
+			<input class="inputFields" type="text" placeholder="Confirm Email"/><br/>
+			<input class="inputFields" type="submit" value="Create Account"/>
+		</form>			
+	</div>
+		
+		
+		
+	</body>
+
+</html>

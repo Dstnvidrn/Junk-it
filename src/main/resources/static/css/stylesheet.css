@@ -1,0 +1,11 @@
+.inputFields {
+    margin-top: 5px;
+    width: 200px;
+    height: 20px;
+}
+hr {
+    border-width: 2px;
+    border-color: black;
+    border-style: solid;
+    border-width: 20px;
+}

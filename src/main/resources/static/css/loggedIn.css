@@ -1,0 +1,32 @@
+.junkItLogo{
+    position: relative;
+    left: 40%;
+}
+
+body {
+    background-color: rgb(128, 119, 102);
+}
+hr {
+    border-width: 2px;
+    border-color: black;
+    border-style: solid;    
+}
+
+.listingBox{
+    border-width: 1px;
+}
+.listingContainer {
+
+}
+
+.leftPanel {
+    position: relative;
+    left: 10px;
+    width: 200px;
+    border: 1px;
+    top: 20px;
+}
+
+.listingForm{
+    margin-top: 10px;
+}

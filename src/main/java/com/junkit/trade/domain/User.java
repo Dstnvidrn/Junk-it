@@ -27,7 +27,6 @@ public class User {
 
 	@JoinColumn(name = "item_id")
 	@OneToMany(fetch =FetchType.LAZY, cascade = CascadeType.ALL)
-
 	private List<Item> items = new ArrayList<>();
 
 	@JoinColumn(name="message_id")

@@ -1,0 +1,16 @@
+body {
+    background-color: rgb(128, 119, 102);
+}
+
+#signUpBtn {
+    border-radius: 60%;
+}
+.junkItLogo{
+    position: relative;
+    left: 40%;    
+}
+hr {
+    border-width: 2px;
+    border-color: black;
+    border-style: solid;    
+}

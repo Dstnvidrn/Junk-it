@@ -1,0 +1,13 @@
+hr {
+    border-width: 2px;
+    border-color: black;
+    border-style: solid;    
+}
+
+body {
+    background-color: rgb(128, 119, 102);
+}
+.junkItLogo{
+    position: relative;
+    left: 40%;
+}

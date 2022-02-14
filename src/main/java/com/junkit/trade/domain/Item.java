@@ -15,8 +15,11 @@ public class Item {
 	
 	@Column(name="item_name")
 	private String itemName;
+
+	@Column(name = "photo")
+	private String photo;
 	
-	@Column(name="itm_descrpt")
+	@Column(name="description")
 	private String description;
 	
 	@Column(name="item_price")
@@ -24,10 +27,17 @@ public class Item {
 	
 	@Column(name="post_date")
 	private LocalDate postDate;
+
+	@Column(name="isAvailable")
+	private Boolean isAvailable;
+
+	@Column(name = "quantity")
+	private Integer quantity;
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
+
 
 	public Long getItemId() {
 		return itemId;
@@ -76,11 +86,28 @@ public class Item {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
-	
-	
-	
-	
-	
 
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+
+	public Boolean getAvailable() {
+		return isAvailable;
+	}
+
+	public void setAvailable(Boolean available) {
+		isAvailable = available;
+	}
+
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
 }

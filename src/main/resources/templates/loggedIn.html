@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <link href="/css/favicon.ico" rel="icon" type="image/x-icon" />
+    <link rel="stylesheet" href="/css/loggedIn.css">
+    <title>Browse Listings</title>
+</head>
+<body>
+    <div class="leftPanel">
+        <h3>Create a new listing</h3>
+        <form action="/browse/{userId}/postListing" method="post" th:object="${item}"
+            enctype="multipart/form-data">
+            <input class="listingForm" type="text" th:field="${item.itemName}" placeholder="Item Name"/>
+            <br/>
+            <input class="listingForm" type="text" th:field="${item.itemPrice}" placeholder="Price"/>
+            <br/>
+            <br/>
+            <label class="listingForm">Item Photo</label>
+            <input type="file" th:field="${item.photo}" name="photo" accept="image/png, image/jpeg" />
+
+            <input class="listingForm" type="number"  th:field="${item.quantity}" placeholder="Quantity"/>
+            <br/>
+            <input class="listingForm" type="submit" value="Create Listing">
+        </form> 
+
+    </div>
+    <div th:if="${#lists.size(items) > 0" th:each="item : ${items}" class="listingContainer">
+        <div class="listingBox" style="border: 1px">
+            <div class="imgDiv">
+                <img th:src="${item.photo}">
+            </div>            
+
+        </div> <!--  For each list, create a box for it -->
+    </div>
+</body>
+</html>

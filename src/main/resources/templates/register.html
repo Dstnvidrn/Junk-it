@@ -3,14 +3,17 @@
 	<head>
 		<meta charset="UTF-8">
 		<link href="/css/favicon.ico" rel="icon" type="image/x-icon" />
-		<link rel="stylesheet" href="/css/stylesheet.css" >
+		<link rel="stylesheet" href="/css/register.css" >
 		<title>Sign up today!</title>
 	</head>
 	
 	<!-- rgb(128, 119, 102) -->
-	<body style="background-color: rgb(128, 119, 102)">
+	<body>
 
 		<nav></nav>
+		<div class="junkItLogo">
+			<img src="/images/junkitlogo.png"/>
+		</div>
 		<div align="center">
 			<h1>Sign up today to get the latest junk trades!</h1>
 		</div>
@@ -22,7 +25,7 @@
 			<input class="inputFields" type="password" th:field="${user.password}" placeholder="Password"/><br/>
 			<input class="inputFields" type="text" th:field="${user.email}" placeholder="Email Address"/><br/>
 			<input class="inputFields" type="text" placeholder="Confirm Email"/><br/>
-			<input class="inputFields" type="submit" value="Create Account"/>
+			<input id="createAcctBtn" type="submit" value="Create Account"/>
 		</form>			
 	</div>
 		

@@ -1,0 +1,23 @@
+.inputFields {
+    margin-top: 5px;
+    width: 200px;
+    height: 20px;
+}
+hr {
+    border-width: 2px;
+    border-color: black;
+    border-style: solid;    
+}
+
+#createAcctBtn {
+    border-radius: 40%;
+}
+
+.junkItLogo{
+    position: relative;
+    left: 40%;
+}
+
+body {
+    background-color: rgb(128, 119, 102);
+}

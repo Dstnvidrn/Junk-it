@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+	<head>
+		<link href="/css/favicon.ico" rel="icon" type="image/x-icon" />
+		<link rel="stylesheet" href="/css/index.css">
+		<title>Home</title>
+	</head>
+	<meta charset="UTF-8">
+	
+	<body>
+		<nav></nav>
+		<div>
+			<form action="/browse/login" method="get">
+
+				<input type="submit" value="Login">
+			</form>
+		</div>
+		<div class="junkItLogo">
+			<img src="/images/junkitlogo.png"/>
+		</div>
+		<div>			
+			<form action="/register" method="get">
+			<input id="signUpBtn" type="submit" value="Sign up"/>
+		</form>
+		</div>
+
+		<hr>
+		
+		<div th:if="${#lists.size(items) > 0" th:each="listing : ${listings}" class="listingContainer">
+			<div class="listingBox" style="border: 1px">
+
+			</div> <!--  For each list, create a box for it -->
+		</div>
+		
+		
+	</body>
+
+</html>

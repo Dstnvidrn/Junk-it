@@ -11,7 +11,7 @@
 	<body>		
 		<div class="section-1" >
 			<div style="flex-grow: 90">
-				<a href="/browse" style="text-decoration:none; margin-left: 10px;">
+				<a href="/welcome" style="text-decoration:none; margin-left: 10px;">
 					<img src="/images/chevron.png" style="width: 30px">
 					<span id="junkit-side-txt">Junk It!</span>
 				</a>
@@ -32,26 +32,27 @@
 				<img src="/images/sign-up.png" id="signup-img"/>
 			</div>
 
-			<div style="flex:0 1 auto" id="form-div">
-				<form action="/register" method="post">
-					<input class="inputFields" type="text" th:field="${user.firstName}" placeholder="First Name"/><br/>
+			<div style="flex:0 1 auto">
+				<form th:action="@{/register}" method="POST">
+					<input class="inputFields" type="text" th:field="${user.firstName}" placeholder="First Name">
+					<br/>	
+					<input class="inputFields" type="text" th:field="${user.lastName}" placeholder="Last Name">
+					<br/>
 	
-					<input class="inputFields" type="text" th:field="${user.lastName}" placeholder="Last Name"/><br/>
+					<input class="inputFields" type="password" th:field="${user.password}" placeholder="Password">
+					<br/>
 	
-					<input class="inputFields" type="password" th:field="${user.password}" placeholder="Password"/><br/>
-	
-					<input class="inputFields" type="text" th:field="${user.email}" placeholder="Email Address"/><br/>
-	
-					<input class="inputFields" type="text" placeholder="Confirm Email"/><br/>
-	
-					<input class ="button" type="submit" value="Create Account"/>
-	
+					<input class="inputFields" type="text" th:field="${user.email}" placeholder="Email Address">
+					<br/>	
+					<br/>	
+					<input class ="button" type="submit" value="Create Account">	
 				</form>	
 			</div>
 		</div>
-		<div class="section-3" >
-			<div id="junkit-banner-div">
-				<img src="/images/junkit-banner.png" style="width: 200px;"/>
+
+		<div class="footer">
+			<div>
+				<img src="/images/junkit-banner.png" style="width: 100px;"/>
 			</div>
 		</div>
 	

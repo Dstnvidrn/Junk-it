@@ -19,6 +19,16 @@ body {
     font-size: large;
     padding-bottom: 100px;
 }
+
+.footer{
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+}
+
 input[type='submit']{ 
     padding: 7px 20px;
     font-weight: bold;
@@ -55,11 +65,5 @@ a {
 #junkit-side-txt {
     position: relative;
     bottom: 10px;
-}
-#junkit-banner-div{   
-    position: relative;
-    left: 45%;
-    top: 200px;    
-    justify-items: center;
 }
 

@@ -27,9 +27,13 @@ public class TradeController {
 	private MessageService messageService;
 	@Autowired
 	private ItemService itemService;
-	
-	@GetMapping("/browse")
-	public String getHomePage(ModelMap modelMap) {
+
+	@GetMapping("/")
+	public String redirectToWelcome() {
+		return"redirect:/welcome";
+	}
+	@GetMapping("/welcome")
+	public String getHomePage() {
 		return "welcome";
 	}
 
@@ -43,28 +47,17 @@ public class TradeController {
 	@PostMapping("/register")
 	public String createAccount(User user) {
 		userService.save(user);
-		return "redirect:/browse/" + user.getUserId();
+		return "redirect:/welcome";
 	}
 
 	@GetMapping("/welcome/{userId}")
 	public String contactSeller(ModelMap modelMap, @PathVariable Long userId) {
-
 		modelMap.put("user", userService.findById(userId));
 		modelMap.put("items",itemService.findAllItems());
 		modelMap.put("item",new Item());
 		return "welcome";
 	}
 
-	@PostMapping("/browse/{userId}/postListing")
-	public String postListing(@PathVariable Long userId, Item item) {
-		itemService.save(item, userId);
-		return "redirect:/browse/" + userId;
-	}
-
-	@GetMapping("/browse/{userId}/{itemId}")
-		public String getItemInfo (ModelMap modelMap, @PathVariable Long itemId) {
-			return null;
-	}
 
 	@GetMapping("profile/{userId}")
 	public String getUserAccount(ModelMap modelMap, @PathVariable Long userId) {

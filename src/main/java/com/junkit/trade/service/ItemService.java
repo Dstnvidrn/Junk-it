@@ -7,19 +7,24 @@ import com.junkit.trade.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
 public class ItemService {
     @Autowired
-    ItemRepository itemRepository;
+    private ItemRepository itemRepository;
+    @Autowired
+    private UserService userService;
 
     public List <Item> findAllItems(){
         return itemRepository.findAll();
     }
 
-    public Item save(Item item, User user) {
-        user.getItems().add(item);
+    public Item save(Item item, Long userId) {
+        item.setUser(userService.findById(userId));
+        item.setAvailable(true);
+        item.setPostDate(LocalDate.now());
         itemRepository.save(item);
         return item;
     }

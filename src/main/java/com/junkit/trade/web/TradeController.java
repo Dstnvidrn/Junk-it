@@ -30,37 +30,40 @@ public class TradeController {
 	
 	@GetMapping("/browse")
 	public String getHomePage(ModelMap modelMap) {
-		return "index";
+		return "welcome";
 	}
+
 	@GetMapping("/register")
 	public String getRegisterPage(ModelMap modelMap) {
 		User user = new User();
 		modelMap.put("user", user);
 		return "register";
 	}
-	
-	@GetMapping("/browse/{userId}")
+
+	@PostMapping("/register")
+	public String createAccount(User user) {
+		userService.save(user);
+		return "redirect:/browse/" + user.getUserId();
+	}
+
+	@GetMapping("/welcome/{userId}")
 	public String contactSeller(ModelMap modelMap, @PathVariable Long userId) {
 
 		modelMap.put("user", userService.findById(userId));
 		modelMap.put("items",itemService.findAllItems());
 		modelMap.put("item",new Item());
-		return "loggedIn";
+		return "welcome";
 	}
 
 	@PostMapping("/browse/{userId}/postListing")
-	public String postListing(@PathVariable Long userId, @ModelAttribute(name = "item") Item item,
-			RedirectAttributes ra,
-			@RequestParam("photo") MultipartFile file) throws IOException{
-		String imgName = file.getOriginalFilename();
-		item.setPhoto(imgName);
-		System.out.println(imgName);
+	public String postListing(@PathVariable Long userId, Item item) {
+		itemService.save(item, userId);
 		return "redirect:/browse/" + userId;
 	}
 
 	@GetMapping("/browse/{userId}/{itemId}")
 		public String getItemInfo (ModelMap modelMap, @PathVariable Long itemId) {
-			return null;		
+			return null;
 	}
 
 	@GetMapping("profile/{userId}")
@@ -78,11 +81,6 @@ public class TradeController {
 		modelMap.put("messages", userMessages);
 		return "messages";
 	}
-	
-	@PostMapping("/register")
-	public String createAccount(User user) {
-		userService.save(user);
-		return "redirect:/browse/" + user.getUserId();
-	}
+
 
 }

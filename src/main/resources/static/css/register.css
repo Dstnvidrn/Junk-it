@@ -10,6 +10,7 @@ body {
      align-items: center;
      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
      align-items: center;
+     
  }
  
  .section-2{
@@ -19,8 +20,14 @@ body {
      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
      font-size: large;
      align-items: center; 
+     padding-bottom: 400px;
  }
- 
+.section-3 {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    align-self: center;
+} 
 
  .inputFields{
      margin-bottom: 10px;
@@ -64,4 +71,11 @@ body {
 #junkit-side-txt {
     position: relative;
     bottom: 10px;
+}
+
+#junkit-banner-div{
+    position: relative;
+    left: 45%;
+    top: 100px;    
+    justify-items: center;
 }

@@ -1,5 +1,7 @@
 package com.junkit.trade.domain;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +14,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name="Message")
 public class Message {
-	
+
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="message_id")
@@ -22,8 +25,15 @@ public class Message {
 	private String messageText;
 	
 	@ManyToOne
-	@JoinColumn(name="user_id")
-	private User user;
+	@JoinColumn(name="item_id")
+	private Item item;
+
+	@ManyToOne
+	private User sender;
+
+	@ManyToOne
+	private User receiver;
+
 
 	public Long getMessageId() {
 		return messageId;
@@ -41,14 +51,27 @@ public class Message {
 		this.messageText = messageText;
 	}
 
-	public User getUser() {
-		return user;
+	public Item getItem() {
+		return item;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setItem(Item item) {
+		this.item = item;
 	}
-	
-	
-	
+
+	public User getSender() {
+		return sender;
+	}
+
+	public void setSender(User sender) {
+		this.sender = sender;
+	}
+
+	public User getReceiver() {
+		return receiver;
+	}
+
+	public void setReceiver(User receiver) {
+		this.receiver = receiver;
+	}
 }

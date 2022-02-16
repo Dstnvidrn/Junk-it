@@ -29,12 +29,12 @@ public class TradeController {
 	private ItemService itemService;
 
 	@GetMapping("/")
-	public String redirectToWelcome() {
-		return"redirect:/welcome";
+	public String redirectToBrowse() {
+		return"redirect:/browse";
 	}
-	@GetMapping("/welcome")
+	@GetMapping("/browse")
 	public String getHomePage() {
-		return "welcome";
+		return "browse";
 	}
 
 	@GetMapping("/register")
@@ -43,37 +43,14 @@ public class TradeController {
 		modelMap.put("user", user);
 		return "register";
 	}
-
 	@PostMapping("/register")
 	public String createAccount(User user) {
 		userService.save(user);
-		return "redirect:/welcome";
-	}
-
-	@GetMapping("/welcome/{userId}")
-	public String contactSeller(ModelMap modelMap, @PathVariable Long userId) {
-		modelMap.put("user", userService.findById(userId));
-		modelMap.put("items",itemService.findAllItems());
-		modelMap.put("item",new Item());
-		return "welcome";
+		return "redirect:/browse";
 	}
 
 
-	@GetMapping("profile/{userId}")
-	public String getUserAccount(ModelMap modelMap, @PathVariable Long userId) {
-		User user = userService.findById(userId);
-		List<Message> userMessages = messageService.findByUser(userId);
-		modelMap.put("messages", userMessages);
-		modelMap.put("user", user);
-		return "profile";
-	}
 
-	@GetMapping("/{userId}/messages")
-	public String getMessagePage(ModelMap modelMap, @PathVariable Long userId) {
-		List<Message> userMessages = messageService.findByUser(userId);
-		modelMap.put("messages", userMessages);
-		return "messages";
-	}
 
 
 }

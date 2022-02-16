@@ -10,5 +10,8 @@ import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<User,Long>{
+    //SELECT * FROM User WHERE username = username
+    User findByUsername(String username);
+
 
 }

@@ -38,7 +38,6 @@ public class Item {
 	@JoinColumn(name = "user_id")
 	private User user;
 
-
 	public Long getItemId() {
 		return itemId;
 	}

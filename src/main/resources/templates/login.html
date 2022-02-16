@@ -1,20 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://thymeleaf.org">
+
 <head>
-    <link href="/css/favicon.ico" rel="icon" type="image/x-icon" />
-    <link rel="stylesheet" href="#">
-    <meta charset="UTF-8">
-    <title>Login</title>
+		<link href="/css/favicon(2).ico" rel="icon" type="image/x-icon" />
+		<!-- <link rel="stylesheet" href="/css/login.css"> -->
+		<title>Junk It- Log In</title>
+		<meta charset="UTF-8">
 </head>
 <body>
-<div class="junkItLogo">
-    <img src="/images/junkitlogo.png"/>
-</div>
-<hr>
-    <div>
-        <form>
+	<!-- <div class="section-1">
+		<div style="flex-grow: 90">
+			<a href="/browse" style="text-decoration:none; margin-left: 10px;">
+				<img src="/images/chevron.png" style="width: 30px">
+				<span id="junkit-side-txt">Junk It!</span>
+			</a>
+		</div> -->
 
-        </form>
-    </div>
+		<!-- <div style="flex-grow: 5">
+			<a href="/login">TEST</a>
+		</div>
+		<div style="flex-grow: 5">
+			<form action="/register" method="get">
+				<input type="submit" value="Sign Up" class="button">
+			</form>
+		</div>
+	</div> -->
+
+
+	<div class="section-2">
+		<div>				
+			<form action="" method="post">
+				<fieldset>
+					<legend>Please Login</legend>						
+					<div th:if="${param.error != null}">
+						Failed to login.
+						<div th:if="${SPRING_SECURITY_LAST_EXCEPTION != null}">
+							Reason: <span
+							 th:text="${SPRING_SECURITY_LAST_EXCEPTION.			message}"></span>
+						</div>
+					</div>		
+		
+				<div th:if="${param.logout != null}">
+					You have been logged out.
+				</div>		
+				<p>
+					<label for="username">Username</label>
+					<input type="text" id="username" name="username"/>
+				</p>
+				<p>
+					<label for="password">Password</label>
+					<input type="password" id="password" name="password" />
+				</p>
+			
+				<div>
+					<button type="submit" class="btn">Log in</button>
+				</div>
+
+				</fieldset>
+			</form>
+		</div>
+	</div>
+
+	<!-- <div class="footer">
+		<div>
+			<img src="/images/junkit-banner.png" style="width: 100px;" />
+		</div>
+	</div> -->
 </body>
 </html>

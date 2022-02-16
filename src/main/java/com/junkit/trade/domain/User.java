@@ -1,7 +1,9 @@
 package com.junkit.trade.domain;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
 @Entity
@@ -22,16 +24,19 @@ public class User {
 	@Column(name="password")
 	private String password;
 	
-	@Column(name="email")
-	private String email;
+	@Column(name="username")
+	private String username;
 
-	@JoinColumn(name = "item_id")
-	@OneToMany(fetch =FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<Item> items = new ArrayList<>();
+	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy = "user")
+	private Set<Authorities> authorities = new HashSet<>();
 
-	@JoinColumn(name="message_id")
-	@OneToMany(fetch =FetchType.LAZY, cascade = CascadeType.ALL)
-	private List<Message> messages = new ArrayList<>();
+	public Set<Authorities> getAuthorities() {
+		return authorities;
+	}
+
+	public void setAuthorities(Set<Authorities> authorities) {
+		this.authorities = authorities;
+	}
 
 	public Long getUserId() {
 		return userId;
@@ -49,32 +54,16 @@ public class User {
 		this.password = password;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public List<Message> getMessages() {
-		return messages;
-	}
-
-	public void setMessages(List<Message> messages) {
-		this.messages = messages;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public void setUserId(Long userId) {
 		this.userId = userId;
-	}
-
-	public List<Item> getItems() {
-		return items;
-	}
-
-	public void setItems(List<Item> items) {
-		this.items = items;
 	}
 
 	public String getFirstName() {

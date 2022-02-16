@@ -3,40 +3,41 @@
 
 <head>
 		<link href="/css/favicon(2).ico" rel="icon" type="image/x-icon" />
-		<!-- <link rel="stylesheet" href="/css/login.css"> -->
+		 <link rel="stylesheet" href="../css/login_page.css">
 		<title>Junk It- Log In</title>
 		<meta charset="UTF-8">
 </head>
 <body>
-	<!-- <div class="section-1">
+	<div class="section-1">
 		<div style="flex-grow: 90">
 			<a href="/browse" style="text-decoration:none; margin-left: 10px;">
 				<img src="/images/chevron.png" style="width: 30px">
 				<span id="junkit-side-txt">Junk It!</span>
 			</a>
-		</div> -->
-
-		<!-- <div style="flex-grow: 5">
-			<a href="/login">TEST</a>
 		</div>
-		<div style="flex-grow: 5">
+
+		 <div style="flex-grow: 5">
+			<!-- <a href="/login">TEST</a> -->
+		</div>
+		<div style="flex-grow: 5;">
 			<form action="/register" method="get">
 				<input type="submit" value="Sign Up" class="button">
 			</form>
 		</div>
-	</div> -->
+	</div>
 
+	<div class="section-2">	
 
-	<div class="section-2">
-		<div>				
-			<form:form action="" method="post">
-				<fieldset>
-					<legend>Please Login</legend>						
+		<div class="form-div" style="flex:0 1 auto; margin-left: 60px;">		
+
+			<form action="" method="post">
+				<fieldset style="border-color:rgb(255,140,25)">
+					<legend style="color:rgb(255,140,25)">Please Login</legend>						
 					<div th:if="${param.error != null}">
 						Failed to login.
 						<div th:if="${SPRING_SECURITY_LAST_EXCEPTION != null}">
 							Reason: <span
-							 th:text="${SPRING_SECURITY_LAST_EXCEPTION.			message}"></span>
+							 th:text="${SPRING_SECURITY_LAST_EXCEPTION.message}"></span>
 						</div>
 					</div>		
 		
@@ -49,22 +50,25 @@
 				</p>
 				<p>
 					<label for="password">Password</label>
-					<input type="password" id="password" name="password" />
+					<input type="password" id="password" name="password"/>
 				</p>
 			
 				<div>
-					<button type="submit" class="btn">Log in</button>
+					<button class="button" type="submit" >Log in</button>
 				</div>
 
 				</fieldset>
-			</form:form>
+			</form>
+		</div>
+		<div class="img-div" style="flex:0 1 auto">
+			<img src="../images/sign-in.png" alt="" style="width: 350px; border-radius: 20px;">
 		</div>
 	</div>
 
-	<!-- <div class="footer">
+	<div class="footer">
 		<div>
 			<img src="/images/junkit-banner.png" style="width: 100px;" />
 		</div>
-	</div> -->
+	</div>
 </body>
 </html>

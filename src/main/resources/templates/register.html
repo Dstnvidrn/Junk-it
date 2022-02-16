@@ -32,13 +32,14 @@
 				<img src="/images/sign-up.png" id="signup-img"/>
 			</div>
 
-			<div style="flex:0 1 auto">
+			<div style="flex:0 1 auto;">
 				<form th:action="@{/register}" method="POST">
 					<input class="inputFields" type="text" th:field="${user.firstName}" placeholder="First Name">
 					<br/>	
 					<input class="inputFields" type="text" th:field="${user.lastName}" placeholder="Last Name">
 					<br/>
-	
+					<input class="inputFields" type="text" th:field="${user.username}" placeholder="Username">
+					<br>
 					<input class="inputFields" type="password" th:field="${user.password}" placeholder="Password">
 					<br/>
 	

@@ -1,6 +1,5 @@
 package com.junkit.trade.domain;
 
-
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -8,39 +7,33 @@ import javax.persistence.*;
 @Entity
 public class Authorities implements GrantedAuthority {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
 
     private String authority;
+
+    @ManyToOne
+    private User user;
 
     public User getUser() {
         return user;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    @ManyToOne
-    private User user;
-
     @Override
     public String getAuthority() {
-        return authority;
+        return null;
     }
 
     public Long getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Long id) {
-        Id = id;
+        this.id = id;
     }
 
     public void setAuthority(String authority) {
         this.authority = authority;
     }
-
 }

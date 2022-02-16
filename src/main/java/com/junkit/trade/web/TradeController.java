@@ -32,6 +32,7 @@ public class TradeController {
 	public String redirectToBrowse() {
 		return"redirect:/browse";
 	}
+
 	@GetMapping("/browse")
 	public String getHomePage() {
 		return "browse";

@@ -46,7 +46,7 @@ public class TradeController {
 	}
 	@PostMapping("/register")
 	public String createAccount(User user) {
-		userService.save(user);
+		createUserAccount(User user);
 		return "redirect:/browse";
 	}
 

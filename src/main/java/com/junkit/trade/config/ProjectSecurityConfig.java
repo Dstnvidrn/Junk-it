@@ -32,14 +32,16 @@ public class ProjectSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/profile").authenticated()
-                .antMatchers("profile/messages").authenticated()
-                .antMatchers("/browse").permitAll()
+        http.
+                authorizeRequests()
+                .antMatchers("/profile").hasAnyRole("USER")
+                .antMatchers("profile/messages").hasAnyRole("USER")
+                .antMatchers("/browse").anonymous()
                 .and()
                 .formLogin()
-                .defaultSuccessUrl("/browse");
+                .loginPage("/showLogin")
+                .defaultSuccessUrl("/browse")
+                .permitAll();
 
 
     }

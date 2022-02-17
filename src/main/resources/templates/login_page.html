@@ -33,7 +33,7 @@
 			<form action="" method="post">
 				<fieldset style="border-color:rgb(255,140,25)">
 					<legend style="color:rgb(255,140,25)">Please Login</legend>						
-					<div th:if="${param.error != null}">
+					<div th:if="${param.error}">
 						Failed to login.
 						<div th:if="${SPRING_SECURITY_LAST_EXCEPTION != null}">
 							Reason: <span
@@ -41,7 +41,7 @@
 						</div>
 					</div>		
 		
-				<div th:if="${param.logout != null}">
+				<div th:if="${param.logout}">
 					You have been logged out.
 				</div>		
 				<p>

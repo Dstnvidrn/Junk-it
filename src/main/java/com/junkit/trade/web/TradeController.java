@@ -6,6 +6,7 @@ import com.junkit.trade.domain.Message;
 import com.junkit.trade.service.ItemService;
 import com.junkit.trade.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -34,9 +35,11 @@ public class TradeController {
 	}
 
 	@GetMapping("/browse")
-	public String getHomePage() {
+	public String getHomePage(ModelMap modelMap, @AuthenticationPrincipal User user) {
+		modelMap.put("user", user);
 		return "browse";
 	}
+
 
 	@GetMapping("/register")
 	public String getRegisterPage(ModelMap modelMap) {
@@ -46,7 +49,7 @@ public class TradeController {
 	}
 	@PostMapping("/register")
 	public String createAccount(User user) {
-		createUserAccount(User user);
+		userService.createUserAccount(user);
 		return "redirect:/browse";
 	}
 

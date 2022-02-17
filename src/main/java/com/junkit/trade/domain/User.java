@@ -30,9 +30,6 @@ public class User implements UserDetails {
 	@Column(name = "username")
 	private String username;
 
-	@Column(name = "roles")
-	private String roles;
-
 	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy = "user")
 	private Set<Authorities> authorities = new HashSet<>();
 
@@ -41,13 +38,13 @@ public class User implements UserDetails {
 	}
 
 	public User(User user) {
-		this.setAuthorities(user.getAuthorities());
-		this.setUserId(user.getUserId());
-		this.setFirstName(user.getFirstName());
-		this.setLastName(user.getLastName());
-		this.setPassword(user.getPassword());
-		this.setUsername(user.getUsername());
-		this.setEmail(user.getEmail());
+		this.authorities = user.getAuthorities();
+		this.userId = user.getUserId();
+		this.firstName = user.getFirstName();
+		this.lastName = user.getLastName();
+		this.password = user.getPassword();
+		this.username = user.getUsername();
+		this.email = user.getEmail();
 	}
 
 
@@ -69,14 +66,6 @@ public class User implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 		return true;
-	}
-
-	public String getRoles() {
-		return roles;
-	}
-
-	public void setRoles(String roles) {
-		this.roles = roles;
 	}
 
 	public String getUsername() {

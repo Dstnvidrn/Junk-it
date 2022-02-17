@@ -36,4 +36,8 @@ public class Authorities implements GrantedAuthority {
     public void setAuthority(String authority) {
         this.authority = authority;
     }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

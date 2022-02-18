@@ -33,6 +33,10 @@ public class UserService {
 		return userRepository.findById(userId).orElse(null);
 	}
 
+	public User save(User user){
+		return userRepository.save(user);
+	}
+
 	public User findByUsername(String username) {
 		User user = findByUsername(username);
 		return user;

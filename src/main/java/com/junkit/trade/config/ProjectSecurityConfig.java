@@ -31,7 +31,7 @@ public class ProjectSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/browse").permitAll()
-                .antMatchers("/profile").hasRole("USER")
+                .antMatchers("/profile").authenticated()
                 .antMatchers("/showLogin").permitAll().and()
                 .formLogin().loginPage("/showLogin");
 //                .defaultSuccessUrl("/browse");

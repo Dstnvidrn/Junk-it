@@ -5,8 +5,9 @@
 		<link href="/css/favicon(2).ico" rel="icon" type="image/x-icon" />
 		<link rel="stylesheet" href="/css/browse.css">
 		<title>Junk-It</title>
+		<meta charset="UTF-8">
 	</head>
-	<meta charset="UTF-8">
+
 
 	<body>
 		<div class="section-1" >
@@ -22,6 +23,7 @@
 			</div>
 			<div sec:authorize ="isAuthenticated()" style="flex-grow: 5">
 				<a href="/profile">Profile</a>
+				<input type= "hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 			</div>
 
 			<div sec:authorize="!isAuthenticated()" style="flex-grow: 5">

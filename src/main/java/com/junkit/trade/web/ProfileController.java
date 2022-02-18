@@ -31,6 +31,7 @@ public class ProfileController {
         loggedInUser.setFirstName(user.getFirstName());
         loggedInUser.setLastName(user.getLastName());
         loggedInUser.setEmail(user.getEmail());
+        loggedInUser.setUsername(user.getUsername());
         String updatedPassword = passwordEncoder.encode(user.getPassword());
         loggedInUser.setPassword(updatedPassword);
         userService.save(loggedInUser);

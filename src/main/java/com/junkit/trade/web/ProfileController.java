@@ -7,6 +7,7 @@ import com.junkit.trade.service.MessageService;
 import com.junkit.trade.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -27,8 +28,8 @@ public class ProfileController {
     private MessageService messageService;
 
     @GetMapping("/profile")
-    public String getUserProfile(ModelMap modelMap, @AuthenticationPrincipal User user) {
-        modelMap.put("user", user);
+    public String getUserProfile(ModelMap modelMap, @AuthenticationPrincipal User loggedUser) {
+        modelMap.put("loggedUser", loggedUser);
         return "profile";
     }
 
@@ -41,22 +42,33 @@ public class ProfileController {
 //        String updatedPassword = passwordEncoder.encode(user.getPassword());
 //        loggedInUser.setPassword(updatedPassword);    // WILL ADD A 'RESET USER PASSWORD LATER
         userService.save(loggedInUser);
-        return "redirect:/profile";
+        return "redirect:/profile/" + loggedInUser.getUserId();
     }
 
     @GetMapping("/profile/messages")
-    public String getMessagePage(ModelMap modelMap, @AuthenticationPrincipal User LoggedInuser) {
-        List<Message> messageList = messageService.findAllByReceiverUserId(LoggedInuser.getUserId());
+    public String getMessagePage(ModelMap modelMap, @AuthenticationPrincipal User LoggedInUser) {
+        List<Message> messageList = messageService.findAllByReceiverUserId(LoggedInUser.getUserId());
         modelMap.put("messages", messageList);
         return "messages";
     }
 
+
+
     @GetMapping("/profile/{userId}")
-    public String getOtherProfile(@PathVariable Long userId, ModelMap modelMap, @AuthenticationPrincipal User loggedInUser){
+    public String getOtherProfile(@PathVariable Long userId, ModelMap modelMap, @AuthenticationPrincipal User loggedUser){
         User user = userService.findById(userId);
+        user.setFirstName(User.upperCaseFirstLetter(user.getFirstName()));
+        user.setLastName(User.upperCaseFirstLetter(user.getLastName()));
         modelMap.put("user", user);
-        modelMap.put("loggedUser",loggedInUser);
+        modelMap.put("loggedUser",loggedUser);
         return "/profile";
     }
+
+    @GetMapping("/profile/{userId}/listings")
+    public String getProfileListing(@AuthenticationPrincipal User loggedUser, @PathVariable Long userId, ModelMap modelMap) {
+
+        return "listings";
+    }
+
 
 }

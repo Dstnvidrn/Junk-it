@@ -55,36 +55,36 @@
                             <a th:href="@{/profile/{userId}(userId=${message.sender.userId})}" th:inline="text">[[${message.sender.username}]]</a>
                         </td>
                         <td th:text="${message.item.itemName}" class="td-text"></td>
-                        <td th:text="${message.timeSent}" class="td-text"></td>      
-                        <td class="td-text" id="viewmessage">
+                        <td th:text="${message.timeSent}" class="td-text"></td>
+                        <input type="hidden" th:value="${message.messageText}" id="messageContent">      
+                        <td class="td-text" id="viewMessage">
                            <a href="#">View</a>
                         </td>
                     </tr>
                 </tbody>
                 </table>
-            </div>            
-            <div class="message-box-div">
-                <textarea readonly id="message-window" ></textarea>
             </div>
             <div>
-                <input type="text" id="reply-txt-box">
-                <input id="messageInputButton" type="button" value="Reply" class="button"/>
-            </div>
-        </main>        
-            
-
-
-
+                <div class="message-box-div">
+                    <textarea readonly id="message-window" ></textarea>
+                </div>
+                <div>
+                    <form>
+                    <input type="text" id="reply-txt-box">
+                    <input id="messageInputButton" type="button" value="Reply" class="button"/>
+                </form>
+                </div> 
+            </div> 
+           
+        </main>
         <footer class="footer">
             <div>
                 <img src="/images/junkit-banner.png" style="width: 100px;"/>
             </div>
         </footer>
-
     </section>
 
-
-
-
+    <script src="../js/messages.js" type="text/javascript"></script>
+    
 </body>
 </html>

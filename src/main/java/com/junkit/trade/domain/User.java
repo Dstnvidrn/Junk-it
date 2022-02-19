@@ -47,7 +47,7 @@ public class User implements UserDetails {
 		this.email = user.getEmail();
 	}
 
-	private String upperCaseFirstLetter(String name) {
+	public static String upperCaseFirstLetter(String name) {
 		char[] charArray = name.toCharArray();
 		String newName = "";
 		newName += charArray[0];

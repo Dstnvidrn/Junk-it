@@ -1,4 +1,4 @@
-package com.junkit.trade;
+package com.junkit.trade.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -14,6 +14,7 @@ public class MessageDTO {
     @JsonProperty("userId")
     private Long userId;
 
+    @JsonProperty("item_id")
 
     public String getSenderName() {
         return senderName;

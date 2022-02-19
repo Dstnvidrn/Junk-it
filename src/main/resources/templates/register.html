@@ -16,9 +16,13 @@
 					<span id="junkit-side-txt">Junk It!</span>
 				</a>
 			</div>
-			<div style="flex-grow: 5">
-				<a th:href="@{/profile/{userId}(userId=${user.userId})}">Profile</a>
+			<div sec:authorize="isAuthenticated()">
+				<div style="flex-grow: 5">
+					<a th:href="@{/profile/{userId}(userId=${user.userId})}">Profile</a>
 			</div>
+
+			</div>
+			
 
 			<div style="flex-grow: 5">
 				<form action="/register" method="get">

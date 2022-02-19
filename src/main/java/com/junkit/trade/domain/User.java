@@ -40,12 +40,24 @@ public class User implements UserDetails {
 	public User(User user) {
 		this.authorities = user.getAuthorities();
 		this.userId = user.getUserId();
-		this.firstName = user.getFirstName();
-		this.lastName = user.getLastName();
+		this.firstName = upperCaseFirstLetter(user.getFirstName());
+		this.lastName = upperCaseFirstLetter(user.getLastName());
 		this.password = user.getPassword();
 		this.username = user.getUsername();
 		this.email = user.getEmail();
 	}
+
+	private String upperCaseFirstLetter(String name) {
+		char[] charArray = name.toCharArray();
+		String newName = "";
+		newName += charArray[0];
+		newName = newName.toUpperCase();
+		for(int i = 1; i < charArray.length; i++) {
+			newName += charArray[i];
+		}
+		return newName;
+	}
+
 
 
 	@Override

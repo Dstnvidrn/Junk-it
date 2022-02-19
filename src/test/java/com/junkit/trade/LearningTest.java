@@ -13,4 +13,7 @@ public class LearningTest {
         String encodedPassword = passwordEncoder.encode("password");
         System.out.println(encodedPassword);
     }
+
+
+
 }

@@ -1,6 +1,7 @@
 package com.junkit.trade.domain;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name="Message")
@@ -34,6 +36,17 @@ public class Message {
 	@ManyToOne
 	private User receiver;
 
+	@Column(name = "timeSent")
+	@DateTimeFormat(pattern = "MM-dd-yyyy hh:mm")
+	private LocalDateTime timeSent;
+
+	public LocalDateTime getTimeSent() {
+		return timeSent;
+	}
+
+	public void setTimeSent(LocalDateTime timeSent) {
+		this.timeSent = timeSent;
+	}
 
 	public Long getMessageId() {
 		return messageId;

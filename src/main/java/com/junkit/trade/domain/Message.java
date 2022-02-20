@@ -27,7 +27,7 @@ public class Message {
 	private String messageText;
 	
 	@ManyToOne
-	@JoinColumn(name="item_id")
+	@JoinColumn(name="item_id",nullable = true)
 	private Item item;
 
 	@ManyToOne

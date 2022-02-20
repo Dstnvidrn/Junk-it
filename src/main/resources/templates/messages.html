@@ -53,8 +53,8 @@
                     <tr th:each="message : ${messages}">
                         <td class="td-text">
                             <a th:href="@{/profile/{userId}(userId=${message.sender.userId})}" th:inline="text">[[${message.sender.username}]]</a>
-                        </td>
-                        <td th:text="${message.item.itemName}" class="td-text"></td>
+                        </td>                        
+                        <td th:text="${message.item != null} ? ${message.item.itemName} : '-' " class="td-text"></td>                        
                         <td th:text="${message.timeSent}" class="td-text"></td>
                         <input type="hidden" th:value="${message.messageText}" id="messageContent">      
                         <td class="td-text" id="viewMessage">

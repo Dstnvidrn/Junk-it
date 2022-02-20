@@ -107,7 +107,7 @@ a {
 }
 
 .message-table-div{
-  height: 250px;  
+  height: 150px;  
   overflow-y: auto;
   overflow-x: hidden;
 }

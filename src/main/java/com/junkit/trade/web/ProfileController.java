@@ -1,6 +1,7 @@
 package com.junkit.trade.web;
 
 
+import com.junkit.trade.domain.Item;
 import com.junkit.trade.domain.Message;
 import com.junkit.trade.domain.User;
 import com.junkit.trade.service.MessageService;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -55,14 +57,27 @@ public class ProfileController {
 
 
     @GetMapping("/profile/{userId}")
-    public String getOtherProfile(@PathVariable Long userId, ModelMap modelMap, @AuthenticationPrincipal User loggedUser){
+    public String getOtherProfile(@PathVariable Long userId, ModelMap modelMap, @AuthenticationPrincipal User loggedInUser){
         User user = userService.findById(userId);
         user.setFirstName(User.upperCaseFirstLetter(user.getFirstName()));
         user.setLastName(User.upperCaseFirstLetter(user.getLastName()));
+        modelMap.put("message",new Message());
         modelMap.put("user", user);
-        modelMap.put("loggedUser",loggedUser);
+        modelMap.put("loggedUser",loggedInUser);
         return "/profile";
     }
+
+    @PostMapping("/profile/{userId}/message")
+    private String messageOtherProfile(@AuthenticationPrincipal User loggedInUser , @PathVariable Long userId, Message newMessage) {
+        User user = userService.findById(userId);
+        newMessage.setReceiver(user);
+        newMessage.setSender(loggedInUser);
+        newMessage.setTimeSent(LocalDateTime.now());
+        messageService.save(newMessage);
+        return "redirect:/profile/" + user.getUserId();
+    }
+
+
 
     @GetMapping("/profile/{userId}/listings")
     public String getProfileListing(@AuthenticationPrincipal User loggedUser, @PathVariable Long userId, ModelMap modelMap) {

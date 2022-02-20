@@ -25,5 +25,9 @@ public class MessageService {
         return messagesList;
     }
 
+    public Message save (Message message) {
+        return messageRepository.save(message);
+    }
+
 
 }

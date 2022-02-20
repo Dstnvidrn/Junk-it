@@ -33,6 +33,10 @@ public class Item {
 
 	@Column(name = "quantity")
 	private Integer quantity;
+
+	public Item(String itemName) {
+		this.itemName = itemName;
+	}
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id")

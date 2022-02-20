@@ -56,7 +56,7 @@
                         </td>                        
                         <td th:text="${message.item != null} ? ${message.item.itemName} : '-' " class="td-text"></td>                        
                         <td th:text="${message.timeSent}" class="td-text"></td>
-                        <input type="hidden" th:value="${message.messageText}" id="messageContent">      
+                        <input type="hidden" th:value="${message.messageText}" id="${message.messageId}">
                         <td class="td-text" id="viewMessage">
                            <a href="#">View</a>
                         </td>

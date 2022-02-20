@@ -1,5 +1,5 @@
 
-var messageContent = document.getElementById("messageContent");
+var messageContent = document.get
 var messageWindow = document.getElementById("message-window");
 var replyTextBox = document.getElementById("reply-txt-box");
 var replyButton = document.getElementById("messageInputButton");

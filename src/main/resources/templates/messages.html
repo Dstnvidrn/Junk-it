@@ -57,7 +57,7 @@
                         <td th:text="${message.item != null} ? ${message.item.itemName} : '-' " class="td-text"></td>                        
                         <td th:text="${message.timeSent}" class="td-text"></td>
                         <input type="hidden" th:value="${message.messageText}" id="${message.messageId}">
-                        <td class="td-text" id="viewMessage">
+                        <td class="td-text" id="viewMessage" onclick="|displayMessage('${message.messsageText}');|">
                            <a href="#">View</a>
                         </td>
                     </tr>
@@ -84,7 +84,16 @@
         </footer>
     </section>
 
-    <script src="../js/messages.js" type="text/javascript"></script>
+    <script>
+
+
+        function displayMessage(messageTxt) {
+        var messageWindow = document.getElementById("message-window;
+
+        messageWindow.textContent = messageTxt;
+
+            }
+    </script>
     
 </body>
 </html>

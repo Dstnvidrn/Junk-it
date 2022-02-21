@@ -48,8 +48,9 @@ public class ProfileController {
     }
 
     @GetMapping("/profile/messages")
-    public String getMessagePage(ModelMap modelMap, @AuthenticationPrincipal User LoggedInUser) {
-        List<Message> messageList = messageService.findAllByReceiverUserId(LoggedInUser.getUserId());
+    public String getMessagePage(ModelMap modelMap, @AuthenticationPrincipal User loggedInUser) {
+        List<Message> messageList = messageService.findAllByReceiverUserId(loggedInUser.getUserId());
+        modelMap.put("loggedUser", loggedInUser);
         modelMap.put("messages", messageList);
         return "messages";
     }

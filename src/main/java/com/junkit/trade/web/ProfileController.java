@@ -82,7 +82,9 @@ public class ProfileController {
 
     @GetMapping("/profile/{userId}/listings")
     public String getProfileListing(@AuthenticationPrincipal User loggedUser, @PathVariable Long userId, ModelMap modelMap) {
-
+        User user = userService.findById(userId);
+        modelMap.put("user", user);
+        modelMap.put("loggedUser", loggedUser);
         return "listings";
     }
 

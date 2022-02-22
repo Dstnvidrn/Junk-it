@@ -46,7 +46,7 @@
                         </a>  
                     </div>            
                 <div class="sidebar-btn">
-                    <a href="/listings">
+                    <a th:href="@{/profile/{userId}/listings(userId=${user.userId})}">
                         <input type="button" class="button" value="Listings">
                     </a> 
                 </div>

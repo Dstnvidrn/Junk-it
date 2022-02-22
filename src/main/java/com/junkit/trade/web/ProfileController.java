@@ -12,9 +12,7 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -69,7 +67,7 @@ public class ProfileController {
     }
 
     @PostMapping("/profile/{userId}/message")
-    private String messageOtherProfile(@AuthenticationPrincipal User loggedInUser , @PathVariable Long userId, Message newMessage) {
+    public String messageOtherProfile(@AuthenticationPrincipal User loggedInUser , @PathVariable Long userId, Message newMessage) {
         User user = userService.findById(userId);
         newMessage.setReceiver(user);
         newMessage.setSender(loggedInUser);
@@ -78,6 +76,19 @@ public class ProfileController {
         return "redirect:/profile/" + user.getUserId();
     }
 
+
+    @PostMapping("/profile/messages/delete/{messageId}")
+    public String deleteMessage(@PathVariable Long messageId) {
+
+        messageService.deleteMessageById(messageId);
+        return"redirect:/profile/messages";
+    }
+
+    @PostMapping("/profile/messages/reply/{userId}")
+    public String replyToUser(@PathVariable Long UserId, @AuthenticationPrincipal User loggedInUser) {
+
+    return "redirect:/profile/messages";
+    }
 
 
     @GetMapping("/profile/{userId}/listings")

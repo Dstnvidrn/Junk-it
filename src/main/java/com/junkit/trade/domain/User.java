@@ -1,6 +1,5 @@
 package com.junkit.trade.domain;
 
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.*;
@@ -32,6 +31,7 @@ public class User implements UserDetails {
 
 	@OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy = "user")
 	private Set<Authorities> authorities = new HashSet<>();
+
 
 	public User(){
 

@@ -1,15 +1,13 @@
-
-var messageContent = document.getElementById();
-var messageWindow = document.getElementById("message-window");
-var replyTextBox = document.getElementById("reply-txt-box");
-var replyButton = document.getElementById("messageInputButton");
-var viewClick = document.getElementById("viewMessage");
+function displayMessage(messageTxt) {
+        var messageWindow = document.getElementById("message-window");
+        messageWindow.textContent = messageTxt;}
 
 
-viewClick.addEventListener("click", displayMessage);
+                //Prompts user to confirm deletion of message
+        function deleteMessage(){
+            var deleteMsgForm = document.getElementById("deleteMessageForm");
+            if (confirm("Are you sure? - DELETE MESSAGE")){
 
-
-
-function displayMessage() {
-  messageWindow.textContent = messageContent.value;
-}
+                deleteMsgForm.submit();
+            }
+        }

@@ -38,16 +38,16 @@
 
 			<div style="flex:0 1 auto;">
 				<form th:action="@{/register}" method="POST">
-					<input class="inputFields" type="text" th:field="${user.firstName}" placeholder="First Name">
+					<input class="inputFields" type="text" th:field="${user.firstName}" placeholder="First Name" required>
 					<br/>	
-					<input class="inputFields" type="text" th:field="${user.lastName}" placeholder="Last Name">
+					<input class="inputFields" type="text" th:field="${user.lastName}" placeholder="Last Name" required>
 					<br/>
-					<input class="inputFields" type="text" th:field="${user.username}" placeholder="Username">
+					<input class="inputFields" type="text" th:field="${user.username}" placeholder="Username" required>
 					<br>
-					<input class="inputFields" type="password" th:field="${user.password}" placeholder="Password">
+					<input class="inputFields" type="password" th:field="${user.password}" placeholder="Password" required>
 					<br/>
 	
-					<input class="inputFields" type="text" th:field="${user.email}" placeholder="Email Address">
+					<input class="inputFields" type="email" th:field="${user.email}" placeholder="Email Address" required>
 					<br/>	
 					<br/>	
 					<input class ="button" type="submit" value="Create Account">	

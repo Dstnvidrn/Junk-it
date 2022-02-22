@@ -96,14 +96,13 @@ body {
     
 }
 .footer{
-    flex: 1;
-    height: 30px;    
+    display: flex;
+    justify-content: center;
     position: absolute;
     bottom: 0;
-
-    margin-bottom: 20px;
-    
-}
+    width: 100%;  
+  }
+  
 
 
 input[type='submit']{ 

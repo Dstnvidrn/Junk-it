@@ -34,7 +34,7 @@ public class ProjectSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/profile").authenticated()
                 .antMatchers("/showLogin").permitAll().and()
                 .formLogin().loginPage("/showLogin");
-//                .defaultSuccessUrl("/browse");
+
 
     }
 

@@ -39,7 +39,7 @@
         <main class="flex-container2">  
             <aside class="sidebar">
                 <div id="action-items">
-                    <h2 style="margin-left:15px">Action Items</h2>
+                    <h2 style="margin-left:15px">Navigation</h2>
                     <div class="sidebar-btn">
                         <a href="/profile/messages">
                             <input type="button" class="button" value="Messages">
@@ -142,7 +142,7 @@
                         <input class="inputFields" type="text" th:field="${user.username}" placeholder="Username" readonly>
                     </p>
                     <p><label>Email Address</label>
-                        <input class="inputFields" type="text" th:field="${user.email}" placeholder="Email Address" readonly>
+                        <input class="inputFields" type="email" th:field="${user.email}" placeholder="Email Address" readonly>
                     </p>
                 </form>   
                 <div style="position: relative; right: 250px; display: none;" id="compose-messageBx">

@@ -48,12 +48,11 @@ public class ProfileController {
     @GetMapping("/profile/messages")
     public String getMessagePage(ModelMap modelMap, @AuthenticationPrincipal User loggedInUser) {
         List<Message> messageList = messageService.findAllByReceiverUserId(loggedInUser.getUserId());
+        modelMap.put("message", new Message());
         modelMap.put("loggedUser", loggedInUser);
         modelMap.put("messages", messageList);
         return "messages";
     }
-
-
 
     @GetMapping("/profile/{userId}")
     public String getOtherProfile(@PathVariable Long userId, ModelMap modelMap, @AuthenticationPrincipal User loggedInUser){
@@ -68,25 +67,19 @@ public class ProfileController {
 
     @PostMapping("/profile/{userId}/message")
     public String messageOtherProfile(@AuthenticationPrincipal User loggedInUser , @PathVariable Long userId, Message newMessage) {
-        User user = userService.findById(userId);
-        newMessage.setReceiver(user);
-        newMessage.setSender(loggedInUser);
-        newMessage.setTimeSent(LocalDateTime.now());
-        messageService.save(newMessage);
-        return "redirect:/profile/" + user.getUserId();
+        messageService.createDirectMessage(loggedInUser, userId, newMessage);
+        return "redirect:/profile/" + userId;
     }
-
 
     @PostMapping("/profile/messages/delete/{messageId}")
     public String deleteMessage(@PathVariable Long messageId) {
-
         messageService.deleteMessageById(messageId);
-        return"redirect:/profile/messages";
+        return "redirect:/profile/messages";
     }
 
     @PostMapping("/profile/messages/reply/{userId}")
-    public String replyToUser(@PathVariable Long UserId, @AuthenticationPrincipal User loggedInUser) {
-
+    public String replyToUser(@AuthenticationPrincipal User loggedInUser, @PathVariable Long UserId,  Message newMessage) {
+        messageService.createDirectMessage(loggedInUser, UserId, newMessage);
     return "redirect:/profile/messages";
     }
 
@@ -98,6 +91,4 @@ public class ProfileController {
         modelMap.put("loggedUser", loggedUser);
         return "listings";
     }
-
-
 }

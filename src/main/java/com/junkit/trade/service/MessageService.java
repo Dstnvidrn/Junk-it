@@ -8,6 +8,7 @@ import com.junkit.trade.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -17,10 +18,10 @@ public class MessageService {
     @Autowired
     private MessageRepository messageRepository;
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     public List<Message> findAllByReceiverUserId (Long userId) {
-        User user = userRepository.getById(userId);
+        User user = userService.findById(userId);
         List<Message> messagesList = messageRepository.findAllByReceiverUserId(userId);
         for (Message message: messagesList) {
             System.out.println(message.getMessageId());
@@ -28,6 +29,16 @@ public class MessageService {
 
         return messagesList;
     }
+
+    public void createDirectMessage(User loggedInUser, Long userId, Message newMessage) {
+        User user = userService.findById(userId);
+        newMessage.setReceiver(user);
+        newMessage.setSender(loggedInUser);
+        newMessage.setTimeSent(LocalDateTime.now());
+        save(newMessage);
+
+    }
+
 
     public Message save (Message message) {
         return messageRepository.save(message);

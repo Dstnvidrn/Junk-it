@@ -48,7 +48,7 @@
                         <th style="position: sticky;top: 0;">Listing Inquiry</th>
                         <th style="position: sticky; top: 0;">Timestamp</th>
                         <th style="position: sticky;top: 0;">Message</th>
-                        <th style="position: sticky;top: 0;">Action</th>
+                        <th style="position: sticky;top: 0;" colspan="2">Action</th>
                     </thead>
                     <tbody>
                 <tr th:each="message : ${messages}">
@@ -66,24 +66,30 @@
                         <form th:action="@{/profile/messages/delete/{msgId}(msgId=${message.messageId})}" method="POST" id="deleteMessageForm">
                             <input type= "hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                         </form>
-
-                    </td>                     
+                    </td>
+                    <td class="td-text" id="replyMessage" onclick="toggleReplybox('${message.sender.userId}')">
+                        <a href="#">Reply</a>
+                    <form id="replyForm" th:action="@{/profile/messages/reply/{userId}(userId=${message.sender.userId})}" style="display: none" method="POST" th:attr="onsubmit=|replyToUser()|">                        
+                            <input id="loggedInUser" type="hidden" th:value="${loggedInUser}">
+                            <input type= "hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                    </form>
+                    </td>
                 </tr>
                 </tbody>
                 </table>
-            </div>
-            <div>
+            </div>            
                 <div class="message-box-div">
                     <textarea readonly id="message-window" ></textarea>
+                    
                 </div>
-                <div>
-                    <!-- TODO/ MAKE THIS FORM SUBMIT A REPLAY TO SENDER OF THE VIEWING MESSAGE -->
-                    <form>
-                    <input type="text" id="reply-txt-box">
-                    <input id="messageInputButton" type="submit" value="Reply" class="button"/>
-                </form>
-                </div> 
-            </div> 
+
+                <!-- Text Box and Button pointing to the #replyForm form -->
+                <input type="text" id="reply-txt-box" th:field="${message.messageText}" style="display: none">
+                <input id="messageInputButton" type="button" value="Send" class="button" style="display: none"/>
+                    <!-- TODO/ MAKE THIS FORM SUBM=T A REPLAY TO SENDER OF THE VIEWING MESSAGE -->
+                
+                 
+             
            
         </main>
         <footer class="footer">
@@ -96,17 +102,42 @@
     <script>
             function displayMessage(messageTxt) {
         var messageWindow = document.getElementById("message-window");
-        messageWindow.textContent = messageTxt;}
+        messageWindow.textContent = " " + messageTxt;}
 
 
                 //Prompts user to confirm deletion of message
         function deleteMessage(){
             var deleteMsgForm = document.getElementById("deleteMessageForm");
-            if (confirm("Are you sure? - DELETE MESSAGE")){
-
+            if (confirm("\t\tConfirm Action: DELETE MESSAGE")){
                 deleteMsgForm.submit();
             }
         }
+
+
+        function toggleReplybox() {
+        
+        let msgInputBox = document.getElementById("reply-txt-box");
+        let replySbmtBtn = document.getElementById("messageInputButton");
+        if (msgInputBox.style.display == "none" && replySbmtBtn.style.display == "none") {
+            replySbmtBtn.style.display = "inline"
+            msgInputBox.style.display = "inline"
+        } else {
+            replySbmtBtn.style.display = "none"
+            msgInputBox.style.display = "none"
+            }        
+        }
+
+        function replyToUser() {
+            let formReplyBox = document.getElementById("replyForm");
+            let inputTxtBx = document.getElementById("reply-txt-box");
+            let formSubmitBtn = document.getElementById("messageInputButton")
+        }
+
+        function showReply(senderId) {
+            alert("Reply Sent.")
+        }
+         
+        
 
     </script>
     

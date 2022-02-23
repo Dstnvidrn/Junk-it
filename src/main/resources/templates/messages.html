@@ -51,42 +51,43 @@
                         <th style="position: sticky;top: 0;" colspan="2">Action</th>
                     </thead>
                     <tbody>
-                <tr th:each="message : ${messages}">
+                <tr th:each="messageobj : ${messages}">
                     <td class="td-text">
-                        <a th:href="@{/profile/{userId}(userId=${message.sender.userId})}" th:inline="text">[[${message.sender.username}]]</a>
+                        <a th:href="@{/profile/{userId}(userId=${messageobj.sender.userId})}" th:inline="text">[[${messageobj.sender.username}]]</a>
                     </td>                        
-                    <td th:text="${message.item != null} ? ${message.item.itemName} : '-' " class="td-text"></td>                        
-                    <td th:text="${#temporals.format(message.timeSent, 'hh:mm MM-dd-yyyy')}" class="td-text"></td>
-                    <input type="hidden" th:value="${message.messageText}" th:id="${message.messageId}">
-                    <td class="td-text" id="viewMessage" th:attr="onclick=|displayMessage('${message.messageText}')|">
+                    <td th:text="${messageobj.item != null} ? ${messageobj.item.itemName} : '-' " class="td-text"></td>                        
+                    <td th:text="${#temporals.format(messageobj.timeSent, 'hh:mm MM-dd-yyyy')}" class="td-text"></td>
+                    <input type="hidden" th:value="${messageobj.messageText}" th:id="${messageobj.messageId}">
+
+                    <td class="td-text" id="viewMessage" th:attr="onclick=|displayMessage('${messageobj.messageText}')|">
                         <a href="#">View</a>
                     </td>
-                    <td class="td-text" id="deleteMessage" th:attr="onclick=|deleteMessage()|">
+                    <td class="td-text" id="deleteMessage" onclick="deleteMessage()">
                         <a href="#">Delete</a>
-                        <form th:action="@{/profile/messages/delete/{msgId}(msgId=${message.messageId})}" method="POST" id="deleteMessageForm">
+                        <form th:action="@{/profile/messages/delete/{msgId}(msgId=${messageobj.messageId})}" method="POST" id="deleteMessageForm">
                             <input type= "hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                         </form>
                     </td>
-                    <td class="td-text" id="replyMessage" th:onclick="toggleReplybox()">
-                        <a href="#">Reply</a>
-                        <input type="hidden" value="${message.sender.userId}" id="senderId">
+                    <td class="td-text" id="replyMessage" onclick="toggleReplybox()">                        
+                        <a href="#" th:attr="onclick=|getSenderId('${messageobj.sender.userId}')|">Reply</a>
+                                                
+                    </td>
+                    <td>
+                        
                     </td>
                 </tr>
                 </tbody>
                 </table>
             </div>            
                 <div class="message-box-div">
-                    <textarea readonly id="message-window" ></textarea>                    
+                <textarea readonly id="message-window"></textarea>
                 </div>
-                <div>            
-                <form id="replyForm" th:action style="display: none" method="POST" onsubmit="sendReply()">                        
-                    <input id="loggedInUser" type="hidden" th:value="${loggedInUser}">
-                    <input type= "hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                    <input type="text" id="reply-txt-box" th:field="${message.messageText}"/>
-                    <input id="messageInputButton" type="submit" value="Send" class="button"/>
-                    <input type="hidden" th:value id="formSenderId">
-                </form>
-            </div>
+                 <div>                                
+                    <input type="text" id="textReplyBox"  style="display: none;"/>
+                    <input  id="messageInputButton" type="button" value="Send" class="button" style="display: none;"/>
+                    <input type="hidden" th:value="${loggedUser.userId}" id="loggedInUser">
+                    <input type= "hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" id="csrf-token"/>
+                </div>
         </main>
         <footer class="footer">
             <div>
@@ -95,46 +96,79 @@
         </footer>
     </section>
 
-    <script inline="javascript">
+    <script >
 
-        /*<![CDATA[*/       
+    var token = document.getElementById("csrf-token").value;
+    var loggedInUser = document.getElementById("loggedInUser").value;
+    var originalSender;      
+    var messageInputButton = document.getElementById("messageInputButton");  
+    
+    textReplyBox.addEventListener("keypress", sendReply);
+    messageInputButton.addEventListener("click", sendReply);
+    
 
-        var senderId = test;
-
+    function sendReply(event) {
+        if(event.keyCode === 13 && textReplyBox.value != '' || event.type == "click") {          
+            
+            console.log("Original Sender ID: " + originalSender);
+            console.log("Current Logged In ID: " + loggedInUser);
+            var message = {
+                senderId : loggedInUser,
+                messageText : document.getElementById("textReplyBox").value,
+                receiver : originalSender
+            };
+            textReplyBox.value = '';
+            fetch ('/profile/messages/reply', {
+                method : "POST",
+                headers : {
+                    "Content-Type" : "application/json",
+                    "X-CSRF-TOKEN": token
+                },
+                body: JSON.stringify(message)
+            }).then(response => response.json).then( () => {
+                alert("Reply Sent");             
+            })
         
-        /*]]>*/
-
-
-            function displayMessage(messageTxt) {
+    }}    
+    function displayMessage(messageTxt) {
         var messageWindow = document.getElementById("message-window");
         messageWindow.textContent = " " + messageTxt;
     }
                 //Prompts user to confirm deletion of message
-        function deleteMessage(){
-            var deleteMsgForm = document.getElementById("deleteMessageForm");
-            if (confirm("\t\tConfirm Action: DELETE MESSAGE")){
-                deleteMsgForm.submit();
-            }
+    function deleteMessage(){
+        var deleteMsgForm = document.getElementById("deleteMessageForm");
+        if (confirm("\t\tConfirm Action: DELETE MESSAGE")){
+            deleteMsgForm.submit();
         }
+    }
 
-        function toggleReplybox() {
+    function getSenderId(sendersId){        
+        console.log(sendersId);    
+        originalSender = sendersId;
+
+
+    }
+
+    // function messageParse(messages) {
+    //     for(let i = 0; i < messages.length; i++) {
+
+    //     }
+    // }
+
+    function toggleReplybox() {
+        var textReplyBox = document.getElementById("textReplyBox");
+        var messageInputButton = document.getElementById("messageInputButton");
         
-        // let msgInputBox = document.getElementById("reply-txt-box");
-        // let replySbmtBtn = document.getElementById("messageInputButton");
-        if (replyForm.style.display == "none") {
-            replyForm.style.display = "block";
-        } else {
-            replyForm.style.display = "none";
+        if (textReplyBox.style.display == "none" && messageInputButton.style.display == "none") {
+            textReplyBox.style.display = "inline";
+            messageInputButton.style.display = "inline";
+        } else {            
+            messageInputButton.style.display = "none";
+            textReplyBox.style.display = "none"
             }        
         }
 
-        function sendReply() {
-            let senderId = document.getElementById("senderId").value;
-            let url = "/profile/messages/reply/" + senderId;
-            let replyForm = document.getElementById("replyForm");
-            document.getElementById("formSenderId").value = senderId;
-            alert("Reply Sent.")
-        }
+        
          
         
 

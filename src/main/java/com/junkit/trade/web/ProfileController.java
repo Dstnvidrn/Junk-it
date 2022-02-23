@@ -1,6 +1,7 @@
 package com.junkit.trade.web;
 
 
+import com.junkit.trade.MessageDto;
 import com.junkit.trade.domain.Item;
 import com.junkit.trade.domain.Message;
 import com.junkit.trade.domain.User;
@@ -76,11 +77,11 @@ public class ProfileController {
         messageService.deleteMessageById(messageId);
         return "redirect:/profile/messages";
     }
-
-    @PostMapping("/profile/messages/reply/{userId}")
-    public String replyToUser(@AuthenticationPrincipal User loggedInUser, @PathVariable Long UserId,  Message newMessage) {
-        messageService.createDirectMessage(loggedInUser, UserId, newMessage);
-    return "redirect:/profile/messages";
+    @ResponseBody
+    @PostMapping("/profile/messages/reply")
+    public String replyToUser(@RequestBody MessageDto newMessage) {
+        messageService.createReplyMessage(newMessage);
+        return "redirect:/profile/messages";
     }
 
 

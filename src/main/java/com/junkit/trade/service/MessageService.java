@@ -41,16 +41,25 @@ public class MessageService {
 
     public MessageDto createReplyMessage(MessageDto messageDto) {
         Message newMessage = new Message();
+        Message repliedToMessage = findById(messageDto.getReplyingToId());
+        repliedToMessage.setReplied(true);
         User receiver = userService.findById(messageDto.getReceiverId());
-        User sender = userService.findById(messageDto.getSenderid());
+        User sender = userService.findById(messageDto.getSenderId());
+        repliedToMessage.setRepliedWithMessage(messageDto.getMessageText());
         newMessage.setReceiver(receiver);
         newMessage.setSender(sender);
         newMessage.setMessageText(messageDto.getMessageText());
         newMessage.setTimeSent(LocalDateTime.now());
         save(newMessage);
+        messageDto.setMessageId(newMessage.getMessageId());
+        System.out.println(messageDto.getMessageId());
         return messageDto;
+
     }
 
+//    public MessageDto getRepliedMessage(User loggedInUser) {
+//
+//    }
 
     public Message save (Message message) {
         return messageRepository.save(message);

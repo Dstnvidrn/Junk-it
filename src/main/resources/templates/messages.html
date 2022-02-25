@@ -49,6 +49,7 @@
                         <th style="position: sticky; top: 0;">Timestamp</th>
                         <th style="position: sticky;top: 0;">Message</th>
                         <th style="position: sticky;top: 0;" colspan="2">Action</th>
+                        <th style="position: sticky;top:0;">Replied</th>
                     </thead>
                     <tbody>
                 <tr th:each="messageobj : ${messages}">
@@ -57,10 +58,10 @@
                     </td>                        
                     <td th:text="${messageobj.item != null} ? ${messageobj.item.itemName} : '-' " class="td-text"></td>                        
                     <td th:text="${#temporals.format(messageobj.timeSent, 'hh:mm MM-dd-yyyy')}" class="td-text"></td>
-                    <input type="hidden" th:value="${messageobj.messageText}" th:id="${messageobj.messageId}">
-
-                    <td class="td-text" id="viewMessage" th:attr="onclick=|displayMessage('${messageobj.messageText}')|">
+                    
+                    <td class="td-text" id="viewMessage" th:attr="onclick=|displayMessage('${messageobj.messageText}', '${messageobj.repliedWithMessage}')|">
                         <a href="#">View</a>
+                        
                     </td>
                     <td class="td-text" id="deleteMessage" onclick="deleteMessage()">
                         <a href="#">Delete</a>
@@ -69,10 +70,10 @@
                         </form>
                     </td>
                     <td class="td-text" id="replyMessage" onclick="toggleReplybox()">                        
-                        <a href="#" th:attr="onclick=|getSenderId('${messageobj.sender.userId}')|">Reply</a>
-                                                
+                        <a href="#" th:attr="onclick=|getSenderId('${messageobj.sender.userId}', '${messageobj.messageId}')|">Reply</a>
                     </td>
-                    <td>
+                    <td class="td-text">                   
+                        <input name="visualDummy" type="checkbox" disabled th:id="${messageobj.messageId}" th:checked="${messageobj.isReplied != false} ? 'checked' : 'false'">
                         
                     </td>
                 </tr>
@@ -97,42 +98,54 @@
     </section>
 
     <script >
-
+    var messageIdReplyingTo;
     var token = document.getElementById("csrf-token").value;
     var loggedInUser = document.getElementById("loggedInUser").value;
-    var originalSender;      
-    var messageInputButton = document.getElementById("messageInputButton");  
-    
+    var originalSender;  
+    var textReplyBox = document.getElementById("textReplyBox");
+    var messageInputButton = document.getElementById("messageInputButton");    
+    var messageWindow = document.getElementById("message-window");
+    var replyCheckElement = document.getElementById(messageIdReplyingTo);    
     textReplyBox.addEventListener("keypress", sendReply);
     messageInputButton.addEventListener("click", sendReply);
-    
+
+    function passMessageId(messageid) {
+        messageIdReplyingTo =  messageid;    
+        console.log("PassMessageID- message id: ", messageIdReplyingTo);
+    }
 
     function sendReply(event) {
-        if(event.keyCode === 13 && textReplyBox.value != '' || event.type == "click") {          
-            
-            console.log("Original Sender ID: " + originalSender);
-            console.log("Current Logged In ID: " + loggedInUser);
+        if((event.keyCode === 13 && textReplyBox.value != '') || (event.type == "click" && textReplyBox.value != '')) {
             var message = {
                 senderId : loggedInUser,
                 messageText : document.getElementById("textReplyBox").value,
-                receiver : originalSender
+                receiver : originalSender,
+                replyingToId : messageIdReplyingTo          
             };
             textReplyBox.value = '';
             fetch ('/profile/messages/reply', {
                 method : "POST",
                 headers : {
                     "Content-Type" : "application/json",
-                    "X-CSRF-TOKEN": token
-                },
+                    "X-CSRF-TOKEN": token},
                 body: JSON.stringify(message)
-            }).then(response => response.json).then( () => {
-                alert("Reply Sent");             
             })
+            .then(alert("Reply Sent"),
+            location.reload()
+            )
+            .then((response) => response.json())
+        }
+    }    
+
+    function displayMessage(messageTxt, repliedMessageTxt) {        
+        console.log(repliedMessageTxt)
+        if(repliedMessageTxt == 'null' || repliedMessageTxt == undefined) {
+           messageWindow.textContent = " " + messageTxt; 
+        } else {
+            messageWindow.textContent = " " + messageTxt;
+            messageWindow.textContent += "\n<REPLIED> " + repliedMessageTxt;
+        }
         
-    }}    
-    function displayMessage(messageTxt) {
-        var messageWindow = document.getElementById("message-window");
-        messageWindow.textContent = " " + messageTxt;
     }
                 //Prompts user to confirm deletion of message
     function deleteMessage(){
@@ -142,16 +155,14 @@
         }
     }
 
-    function getSenderId(sendersId){        
-        console.log(sendersId);    
+    function getSenderId(sendersId, messageId){
+        console.log('getSenderId : ', messageId )
+        passMessageId(messageId);
         originalSender = sendersId;
+        }
 
-
-    }
-
-    function toggleReplybox() {
-        var textReplyBox = document.getElementById("textReplyBox");
-        var messageInputButton = document.getElementById("messageInputButton");
+    function toggleReplybox() {        
+       
         
         if (textReplyBox.style.display == "none" && messageInputButton.style.display == "none") {
             textReplyBox.style.display = "inline";
@@ -161,6 +172,8 @@
             textReplyBox.style.display = "none"
             }        
         }
+
+        
     </script>
     
 </body>

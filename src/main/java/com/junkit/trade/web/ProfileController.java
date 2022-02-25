@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.MessageDigest;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -79,10 +80,19 @@ public class ProfileController {
     }
     @ResponseBody
     @PostMapping("/profile/messages/reply")
-    public String replyToUser(@RequestBody MessageDto newMessage) {
-        messageService.createReplyMessage(newMessage);
-        return "redirect:/profile/messages";
+    public MessageDto replyToUser(@RequestBody MessageDto newMessage) {
+
+        return messageService.createReplyMessage(newMessage);
     }
+
+//    @ResponseBody
+//    @GetMapping("/profile/message/replies")
+//    public MessageDto replyMessage(@AuthenticationPrincipal User loggedInUser, MessageDto repliedMessage) {
+//
+//        System.out.println("repliedMessage in the Getmapping" + reply.getMessageText());
+//
+//        return reply;
+//    }
 
 
     @GetMapping("/profile/{userId}/listings")

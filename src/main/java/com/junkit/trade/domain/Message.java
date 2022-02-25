@@ -40,6 +40,29 @@ public class Message {
 	@DateTimeFormat(pattern = "MM-dd-yyyy hh:mm")
 	private LocalDateTime timeSent;
 
+	@Column(name = "isReplied")
+	private Boolean isReplied = false;
+
+	private String repliedWithMessage;
+
+	public String getRepliedWithMessage() {
+		return repliedWithMessage;
+	}
+
+	public void setRepliedWithMessage(String repliedWithMessage) {
+		this.repliedWithMessage = repliedWithMessage;
+	}
+
+	public Boolean isReplied() {
+		return isReplied;
+	}
+
+
+
+	public void setReplied(Boolean replied) {
+		isReplied = replied;
+	}
+
 	public LocalDateTime getTimeSent() {
 		return timeSent;
 	}

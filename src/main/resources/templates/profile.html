@@ -146,11 +146,9 @@
                     </p>
                 </form>   
                 <div style="position: relative; right: 250px; display: none;" id="compose-messageBx">
-                    <div class="message-box-div">
-                        <textarea readonly id="message-window" ></textarea>
-                    </div>
+                    
                     <div>
-                        <form th:action="@{/profile/{userId}/message(userId=${user.userId})}" method="post">
+                        <form th:action="@{/profile/{userId}/message(userId=${user.userId})}" method="post" id="composeForm">
                             <input type="text" id="reply-txt-box" th:field="${message.messageText}">
                             <input id="messageInputButton" type="submit" value="Send" class="button"/>
                             <input type= "hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>

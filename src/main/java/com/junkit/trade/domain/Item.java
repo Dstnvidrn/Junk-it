@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import javax.persistence.*;
 
 @Entity
-@Table(name="Item")
+@Table(name="Items")
 public class Item {
 	
 	@Id
@@ -16,7 +16,7 @@ public class Item {
 	@Column(name="item_name")
 	private String itemName;
 
-	@Column(name = "photo")
+	@Column(name = "photo", nullable = true)
 	private String photo;
 	
 	@Column(name="description")
@@ -33,6 +33,9 @@ public class Item {
 
 	@Column(name = "quantity")
 	private Integer quantity;
+
+	public Item() {
+	}
 
 	public Item(String itemName) {
 		this.itemName = itemName;

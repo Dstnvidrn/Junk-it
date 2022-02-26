@@ -16,9 +16,7 @@ html{
   justify-content: center;
   
 }
-.main-content{
-  
-}
+
 .message-box-div{
   margin-left: 150px;
   margin-top: 30px;
@@ -131,4 +129,11 @@ a {
   height: 20px;
   border-radius: 10px;
   
+}
+
+
+
+#junkit-side-txt {
+  position: relative;
+  bottom: 10px;
 }

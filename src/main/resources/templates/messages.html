@@ -35,7 +35,7 @@
             </form>
         </div> 
     </div>
-
+<!-- Table created to display all details of each message received by other users -->
     <section class="flex-container2">
         <main class="main-content">
             <div class="message-pic">
@@ -55,21 +55,30 @@
                 <tr th:each="messageobj : ${messages}">
                     <td class="td-text">
                         <a th:href="@{/profile/{userId}(userId=${messageobj.sender.userId})}" th:inline="text">[[${messageobj.sender.username}]]</a>
-                    </td>                        
+                    </td>                
+                            <!-- On the codition of a direct message being sent (meanings the sender of the message 
+                                is not inquiring about a message). the Table cell for an Item's name will be '-', otherwise the Item's name will be display in the cell -->
                     <td th:text="${messageobj.item != null} ? ${messageobj.item.itemName} : '-' " class="td-text"></td>                        
+
+                                <!-- Formatting the time a message was sent to a more reader friendly format NOTE:
+                                lowercase hh will display time in 12hr standard time, contrary to HH which is military time displayed -->
                     <td th:text="${#temporals.format(messageobj.timeSent, 'hh:mm MM-dd-yyyy')}" class="td-text"></td>
                     
+                                    <!-- The onclick event listener will be invoking a method/function that will pass the message's text content as well as a message text that the receiver has reply to this original message with. This is done to move data out of the interate message list "trapped" in the th:each iteration. Clicking view will display the original message if a reply has been issued, the reply will also be display in a textarea box on screen. -->
                     <td class="td-text" id="viewMessage" th:attr="onclick=|displayMessage('${messageobj.messageText}', '${messageobj.repliedWithMessage}')|">
                         <a href="#">View</a>
                         
                     </td>
+                        <!-- onclick event will prompt the user to confirm a message deletion on the receivers side. -->
                     <td class="td-text" id="deleteMessage" onclick="deleteMessage()">
                         <a href="#">Delete</a>
                         <form th:action="@{/profile/messages/delete/{msgId}(msgId=${messageobj.messageId})}" method="POST" id="deleteMessageForm">
                             <input type= "hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                         </form>
                     </td>
-                    <td class="td-text" id="replyMessage" onclick="toggleReplybox()">                        
+                            <!-- Onclick event will invoke the toggleReplyBox method/function, which simply just displays the text input box used to create a reply message -->
+                    <td class="td-text" id="replyMessage" onclick="toggleReplybox()">      
+                            <!--Along with displaying the input text box, the originals message sender's ID is passed into a getSender() method/function to pass the ID out of the message th:each iteration, as well as the original messageId which is used to   -->
                         <a href="#" th:attr="onclick=|getSenderId('${messageobj.sender.userId}', '${messageobj.messageId}')|">Reply</a>
                     </td>
                     <td class="td-text">                   
@@ -105,13 +114,12 @@
     var textReplyBox = document.getElementById("textReplyBox");
     var messageInputButton = document.getElementById("messageInputButton");    
     var messageWindow = document.getElementById("message-window");
-    var replyCheckElement = document.getElementById(messageIdReplyingTo);    
+    // var replyCheckElement = document.getElementById(messageIdReplyingTo);    
     textReplyBox.addEventListener("keypress", sendReply);
     messageInputButton.addEventListener("click", sendReply);
 
     function passMessageId(messageid) {
-        messageIdReplyingTo =  messageid;    
-        console.log("PassMessageID- message id: ", messageIdReplyingTo);
+        messageIdReplyingTo =  messageid; 
     }
 
     function sendReply(event) {
@@ -138,7 +146,6 @@
     }    
 
     function displayMessage(messageTxt, repliedMessageTxt) {        
-        console.log(repliedMessageTxt)
         if(repliedMessageTxt == 'null' || repliedMessageTxt == undefined) {
            messageWindow.textContent = " " + messageTxt; 
         } else {
@@ -155,8 +162,7 @@
         }
     }
 
-    function getSenderId(sendersId, messageId){
-        console.log('getSenderId : ', messageId )
+    function getSenderId(sendersId, messageId){        
         passMessageId(messageId);
         originalSender = sendersId;
         }

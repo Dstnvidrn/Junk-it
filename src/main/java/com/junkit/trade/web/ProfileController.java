@@ -5,6 +5,7 @@ import com.junkit.trade.MessageDto;
 import com.junkit.trade.domain.Item;
 import com.junkit.trade.domain.Message;
 import com.junkit.trade.domain.User;
+import com.junkit.trade.service.ItemService;
 import com.junkit.trade.service.MessageService;
 import com.junkit.trade.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,9 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.security.MessageDigest;
 import java.time.LocalDateTime;
@@ -28,6 +31,9 @@ public class ProfileController {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private MessageService messageService;
+
+    @Autowired
+    private ItemService itemService;
 
     @GetMapping("/profile")
     public String getUserProfile(ModelMap modelMap, @AuthenticationPrincipal User loggedUser) {
@@ -81,25 +87,29 @@ public class ProfileController {
     @ResponseBody
     @PostMapping("/profile/messages/reply")
     public MessageDto replyToUser(@RequestBody MessageDto newMessage) {
-
         return messageService.createReplyMessage(newMessage);
     }
 
-//    @ResponseBody
-//    @GetMapping("/profile/message/replies")
-//    public MessageDto replyMessage(@AuthenticationPrincipal User loggedInUser, MessageDto repliedMessage) {
-//
-//        System.out.println("repliedMessage in the Getmapping" + reply.getMessageText());
-//
-//        return reply;
-//    }
+
 
 
     @GetMapping("/profile/{userId}/listings")
     public String getProfileListing(@AuthenticationPrincipal User loggedUser, @PathVariable Long userId, ModelMap modelMap) {
         User user = userService.findById(userId);
+//        List<Item> listings =
         modelMap.put("user", user);
+
         modelMap.put("loggedUser", loggedUser);
+        modelMap.put("item",new Item());
         return "listings";
+    }
+
+    @PostMapping("/profile/{userId}/listings")
+    public String postNewListing(@RequestParam("image") MultipartFile multipartFile, Long loggedInUserId, Item newItem) {
+        String photoName = StringUtils.cleanPath((multipartFile.getOriginalFilename()));
+
+
+        itemService.postNewItemListing(newItem, loggedInUserId, photoName);
+        return"listings";
     }
 }

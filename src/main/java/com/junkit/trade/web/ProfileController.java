@@ -9,6 +9,7 @@ import com.junkit.trade.service.ItemService;
 import com.junkit.trade.service.MessageService;
 import com.junkit.trade.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,7 +32,6 @@ public class ProfileController {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private MessageService messageService;
-
     @Autowired
     private ItemService itemService;
 
@@ -93,23 +93,6 @@ public class ProfileController {
 
 
 
-    @GetMapping("/profile/{userId}/listings")
-    public String getProfileListing(@AuthenticationPrincipal User loggedUser, @PathVariable Long userId, ModelMap modelMap) {
-        User user = userService.findById(userId);
-//        List<Item> listings =
-        modelMap.put("user", user);
-
-        modelMap.put("loggedUser", loggedUser);
-        modelMap.put("item",new Item());
-        return "listings";
-    }
-
-    @PostMapping("/profile/{userId}/listings")
-    public String postNewListing(@RequestParam("image") MultipartFile multipartFile, Long loggedInUserId, Item newItem) {
-        String photoName = StringUtils.cleanPath((multipartFile.getOriginalFilename()));
 
 
-        itemService.postNewItemListing(newItem, loggedInUserId, photoName);
-        return"listings";
-    }
 }

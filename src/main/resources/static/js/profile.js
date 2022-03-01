@@ -13,7 +13,7 @@ function sendAlert() {
   alert("Message Sent.")
 }
 function toggleInputBox() {
-  if(composebox.style.display === "none"){
+  if(composebox.style.display == "none"){
     composebox.style.display = "block";
   } else {
     composebox.style.display = "none";

@@ -27,17 +27,17 @@ body {
     position: absolute;
     bottom: 0;
     width: 100%;
-    
+
 }
 
-input[type='submit']{ 
+input[type='submit']{
     padding: 7px 20px;
     font-weight: bold;
     border: 0px;
     border-radius: 10px;
     background-color: rgb(255,140,25);
     color: rgb(38,0,77);
-    box-shadow: 0 3px #999;    
+    box-shadow: 0 3px #999;
 }
 .button:hover{background-color: chocolate}
 .button:active{
@@ -56,6 +56,12 @@ a {
     color: antiquewhite;
 }
 
+.listingBox{
+  border-radius: 10px;
+  border-style: groove;
+  bord
+}
+
 #business-deal {
     border-radius: 30px;
     width: 350px;
@@ -67,4 +73,3 @@ a {
     position: relative;
     bottom: 10px;
 }
-

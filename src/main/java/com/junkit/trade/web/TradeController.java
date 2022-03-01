@@ -36,6 +36,8 @@ public class TradeController {
 
 	@GetMapping("/browse")
 	public String getHomePage(ModelMap modelMap, @AuthenticationPrincipal User user) {
+	    List<Item> listings = itemService.findAllItems();
+	    modelMap.put("listings", listings);
 		modelMap.put("user", user);
 		return "browse";
 	}
@@ -53,7 +55,53 @@ public class TradeController {
 		return "redirect:/browse";
 	}
 
+	@GetMapping("/profile/{userId}/listings")
+	public String getProfileListing(@AuthenticationPrincipal User loggedUser, @PathVariable Long userId, ModelMap modelMap) {
+		User user = userService.findById(userId);
+		System.out.println(loggedUser.getUserId());
+		System.out.println(user.getUserId());
+		List<Item> listings = itemService.findAllByUserId(loggedUser.getUserId());
+		modelMap.put("user", user);
+		modelMap.put("loggedUser", loggedUser);
+		modelMap.put("item",new Item());
+		modelMap.put("listings", listings);
+		return "listings";
+	}
 
+	@PostMapping("/profile/{userId}/listings")
+	public String postNewListing(Item newItem, @AuthenticationPrincipal User loggedUser,@PathVariable Long userId){
+		itemService.save(newItem, loggedUser);
+		return "redirect:/profile/{userId}/listings";
+	}
+
+	@GetMapping("/profile/{userId}/listings/{itemId}")
+	public String getItemDetails(@AuthenticationPrincipal User loggedUser, @PathVariable Long userId, ModelMap modelMap, @PathVariable Long itemId){
+		Item selectedItem = itemService.findById(itemId);
+		User user = userService.findById(userId);
+		modelMap.put("user",user);
+		modelMap.put("loggedUser", loggedUser);
+		modelMap.put("item",selectedItem);
+		modelMap.put("message", new Message());
+		return "listingDetails";
+	}
+
+	@PostMapping("/profile/{userId}/listings/{itemId}/update")
+	public String updateItemDetails(Item selectedItem, @AuthenticationPrincipal User loggedInUser){
+		itemService.updateItem(selectedItem, loggedInUser);
+		return "redirect:/profile/{userId}/listings/{itemId}";
+	}
+
+	@PostMapping("/profile/listings/delete/{itemId}")
+	public String deleteItemListing(@PathVariable Long itemId, @AuthenticationPrincipal User loggedInUser) {
+		itemService.deleteItem(itemId);
+		return "redirect:/profile/"+ loggedInUser.getUserId() + "/listings";
+	}
+
+	@PostMapping("/profile/listings/sell/{itemId}")
+	public String markItemSold(@PathVariable Long itemId, @AuthenticationPrincipal User loggedInUser) {
+		itemService.markSold(itemId);
+		return "redirect:/profile/"+ loggedInUser.getUserId() + "/listings";
+	}
 
 
 

@@ -37,12 +37,8 @@ public class Item {
 	public Item() {
 	}
 
-	public Item(String itemName) {
-		this.itemName = itemName;
-	}
-	
+
 	@ManyToOne
-	@JoinColumn(name = "user_id")
 	private User user;
 
 	public Long getItemId() {

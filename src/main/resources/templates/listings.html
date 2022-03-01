@@ -1,148 +1,213 @@
 <!DOCTYPE html>
-<html xmlns:th="http://thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-	<head>
-		
-		<link href="/css/favicon(2).ico" rel="icon" type="image/x-icon" />
-		<link rel="stylesheet" href="/css/listings.css">
-		<title>Junk-It</title>
-		<meta charset="UTF-8">
-	</head>
+<html
+  xmlns:th="http://thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+>
+  <head>
+    <link href="/css/favicon(2).ico" rel="icon" type="image/x-icon" />
+    <link rel="stylesheet" href="/css/listings.css" />
+    <title>Junk-It</title>
+    <meta charset="UTF-8" />
+  </head>
 
-<body>
-         
-    <div class="ifblock-container" th:if="${user.userId} == ${loggedUser.userId}">
-        <div class="flex-container1" >
-            <div style="flex-grow: 90">
-                <a href="/browse" style="text-decoration:none; margin-left: 10px;">
-                    <img src="/images/chevron.png" style="width: 30px">
-                    <span id="junkit-side-txt">Junk It!</span>
-                </a>
-            </div>
-            <div sec:authorize="!isAuthenticated()" style="flex-grow: 5">
-                <a href="/showLogin">Log In</a>
-            </div>
-            <div sec:authorize ="isAuthenticated()" style="flex-grow: 5">            
-            </div>
-            <div sec:authorize="!isAuthenticated()" style="flex-grow: 5">
-                <form action="/register" method="get">
-                    <input type="submit" value="Sign Up" class="button">
-                </form>
-            </div>
-            <div sec:authorize="isAuthenticated()" style="flex-grow: 5">
-                <form action="/logout" method="post">
-                    <input type="submit" value="Sign Out" class="button">
-                    <input type= "hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                </form>
-            </div> 
+  <body>
+    <div
+      class="ifblock-container"
+      th:if="${user.userId} == ${loggedUser.userId}"
+    >
+      <div class="flex-container1">
+        <div style="flex-grow: 90">
+          <a href="/browse" style="text-decoration: none; margin-left: 10px">
+            <img src="/images/chevron.png" style="width: 30px" />
+            <span id="junkit-side-txt">Junk It!</span>
+          </a>
         </div>
-        <main class="flex-container2">  
-            <aside class="sidebar">
-                <div id="action-items">
-                    <h2 style="margin-left:15px">Navigation</h2>
-                    <div class="sidebar-btn">
-                        <a th:href="@{/profile/{userId}(userId=${loggedUser.userId})}">
-                            <input type="button" class="button" value="Profile">
-                        </a>  
-                    </div>            
-                <div class="sidebar-btn">
-                    <a th:href="@{/profile/messages}">
-                        <input type="button" class="button" value="Messages">
-                    </a> 
-                </div>
-                <div class="sidebar-btn"> 
-                    <input class="button" id="createListingBtn" type="button" value="Post Junk"/>
-                </div>
+        <div sec:authorize="!isAuthenticated()" style="flex-grow: 5">
+          <a href="/showLogin">Log In</a>
+        </div>
+        <div sec:authorize="isAuthenticated()" style="flex-grow: 5"></div>
+        <div sec:authorize="!isAuthenticated()" style="flex-grow: 5">
+          <form action="/register" method="get">
+            <input type="submit" value="Sign Up" class="button" />
+          </form>
+        </div>
+        <div sec:authorize="isAuthenticated()" style="flex-grow: 5">
+          <form action="/logout" method="post">
+            <input type="submit" value="Sign Out" class="button" />
+            <input
+              type="hidden"
+              th:name="${_csrf.parameterName}"
+              th:value="${_csrf.token}"
+            />
+          </form>
+        </div>
+      </div>
+      <main class="flex-container2">
+        <aside class="sidebar">
+          <div id="action-items">
+            <h2 style="margin-left: 15px">Navigation</h2>
+            <div class="sidebar-btn">
+              <a th:href="@{/profile/{userId}(userId=${loggedUser.userId})}">
+                <input type="button" class="button" value="Profile" />
+              </a>
             </div>
+            <div class="sidebar-btn">
+              <a th:href="@{/profile/messages}">
+                <input type="button" class="button" value="Messages" />
+              </a>
+            </div>
+            <div class="sidebar-btn">
+              <input
+                class="button"
+                id="createListingBtn"
+                type="button"
+                value="Post Junk"
+              />
+            </div>
+          </div>
         </aside>
         <section class="main-content">
-                <!-- TABLE OF POSTED LISTINGS -->
-                <div class="message-table-div">
-                <table id="msg-table">
-                    <thead style="background-color: rgb(255, 140, 25); color: rgb(38, 0, 77);position: sticky; top: 0;">
-                        <th style="position: sticky; top: 0;">Item Name</th>
-                        <th style="position: sticky;top: 0;">Items Price</th>
-                        <th style="position: sticky; top: 0;">Date Posted</th>
-                        <th style="position: sticky;top: 0;">Sold</th>
-                        <th style="position: sticky;top: 0;" colspan="2">Action</th>
-                        <th style="position: sticky;top:0;">Replied</th>
-                    </thead>
-                    <tbody>
-                <tr th:each="listing : ${listings}">
-                    <td class="td-text">
-                        <a href="#" th:inline="text">[[${item.itemName}]]</a>
+          <!-- TABLE OF POSTED LISTINGS -->
+          <div class="item-table-div">
+            <table id="item-table">
+              <thead
+                style="background-color: rgb(255, 140, 25); color: rgb(38, 0, 77);position: sticky;top: 0;"
+              >
+                <th style="position: sticky; top: 0">Item Name</th>
+                <th style="position: sticky; top: 0">Items Price</th>
+                <th style="position: sticky; top: 0">Date Posted</th>
+                <th style="position: sticky; top: 0">Status</th>
+                <th style="position: sticky; top: 0" colspan="2">Action</th>                
+              </thead>
+              <tbody>
+                <tr th:each="item : ${listings}">
+                  <td class="td-text" th:text="${item.itemName}">
+                    
+                  </td>
+                  <td class="td-text" th:inline="text">$ [[${item.itemPrice}]]
+                  </td>
+                  <td th:text="${#temporals.format(item.postDate, 'MM-dd-yyyy')}" class="td-text">
+                    </td>
+                  <td
+                    th:text="${item.available} ? 'Active' : 'Sold' "
+                    class="td-text">
                     </td>
                     <td class="td-text">
-                        <input th:text="#temporals.format${item.itemPrice">
+                        <a th:href="@{/profile/{userId}/listings/{itemId}(userId=${loggedUser.userId}, itemId=${item.itemId})}">Details</a>
                     </td>
-                    <td th:text="${#temporals.format(item.postDate, 'MM-dd-yyyy')}" class="td-text"></td>
-                    <td th:text="${item.isAvailable == false} ? 'Sold' : 'Active'" class="td-text"></td>
-                    <td class="td-text" id="viewMessage" th:attr="onclick=|displayMessage('${messageobj.messageText}', '${messageobj.repliedWithMessage}')|">
-                        <a href="#">View</a>
-                        
-                    </td>
-                    <td class="td-text" id="deleteMessage" onclick="deleteMessage()">
-                        <a href="#">Delete</a>
-                        <form th:action="@{/profile/messages/delete/{msgId}(msgId=${messageobj.messageId})}" method="POST" id="deleteMessageForm">
-                            <input type= "hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                        </form>
-                    </td>
-                    <td class="td-text" id="replyMessage" onclick="toggleReplybox()">                        
-                        <a href="#" th:attr="onclick=|getSenderId('${messageobj.sender.userId}', '${messageobj.messageId}')|">Reply</a>
-                    </td>
-                    <td class="td-text">                   
-                        <input name="visualDummy" type="checkbox" disabled th:id="${messageobj.messageId}" th:checked="${messageobj.isReplied != false} ? 'checked' : 'false'">
-                        
-                    </td>
+                    <td class="td-text" onclick="deleteItem()">
+                      <a href="#">Delete</a>
+                      <form th:action="@{/profile/listings/delete/{itemId}(itemId=${item.itemId})}" method="POST" id="deleteItemForm">
+                        <input type= "hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>                        
+                    </form>
+                  
                 </tr>
-                </tbody>
-                </table>
-            </div> 
+              </tbody>
+            </table>
+          </div>
 
-                <!-- UPLOAD IMAGE FORM BELOW -->
-            <div class="form-content" id="imageUploadForm">
-                <h2 style="position: relative; right: 65px;">Enlist Junk for trade below</h2>
-                <br>            
-                <form th:action="@{/profile/{userId}/listings(userId=${loggedUser.userId})}" method="POST" enctype="multipart/form-data">
-                <div>
-                    <label for="file" class="button">Select Image</label>                    
-                    <input id="file" name="image" class="inputFields" type="file"  th:field="${item.photo}" accept="image/png, image/jpeg " style="display: none;height: 0; width: 0; z-index: -1;">
-                </div>
-                    <br>
-                                     
-                    <input class="inputFields" type="number"th:field="${item.itemPrice}" placeholder="Price ($USD)" step="0.25" value="0.00" id="itempricing">
-                    <br/>
-                    <input class="inputFields" type="text" th:field="${item.itemName}" placeholder="Item Name">
-                    <br/>		
-                    <textarea placeholder="Junk Description" th:field="${item.description}" maxlength="200" style="height:110px; width: 250px; position: relative;
-                    right:32px"></textarea>
-                    <br/>
-                    <br/>	
-                    <input class ="button" type="submit" value="List Item" id="update-btn">
-                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                </form>        
-            </div>
+         
+          <div class="form-content" id="imageUploadForm" style="display: none">
+            <h2 style="position: relative; right: 65px">
+              Enlist Junk for trade below
+            </h2>
+            <br />
+            <form
+              th:action="@{/profile/{userId}/listings(userId=${loggedUser.userId})}"
+              method="POST"
+            >
+              <input
+                type="text"
+                class="inputFields"
+                th:field="${item.photo}"
+                placeholder="Image URL"
+              />
+              <br />
+              <input
+                class="inputFields"
+                type="number"
+                th:field="${item.itemPrice}"
+                placeholder="Price ($USD)"
+                step="0.25"
+                value="0.00"
+                id="itempricing"
+                min="0.00"
+              />
+              <br />
+              <input
+                class="inputFields"
+                type="number"
+                th:field="${item.quantity}"
+                placeholder="Quantity"
+                step="1"
+                value="1"
+                id="itemQuantity"
+                min="1"
+              />
+              <br />
+              <input
+                class="inputFields"
+                type="text"
+                th:field="${item.itemName}"
+                placeholder="Item Name"
+              />
+              <br />
+              <textarea
+                placeholder="Junk Description"
+                th:field="${item.description}"
+                maxlength="200"
+                style="
+                  height: 110px;
+                  width: 250px;
+                  position: relative;
+                  right: 32px;                  
+                " id="description"
+              ></textarea>
+              <br />
+              <br />
+              <input
+                class="button"
+                type="submit"
+                value="List Item"
+                id="update-btn"
+              />
+              <input
+                type="hidden"
+                th:name="${_csrf.parameterName}"
+                th:value="${_csrf.token}"
+              />
+            </form>
+          </div>
         </section>
         <footer class="footer">
-            <div>
-                <img src="/images/junkit-banner.png" style="width: 100px;"/>
-            </div>
+          <div>
+            <img src="/images/junkit-banner.png" style="width: 100px" />
+          </div>
         </footer>
-        </main>    
+      </main>
     </div>
 
     <script>
-        var imageUploadForm = document.getElementById("imageUploadForm");
-        var createListingBtn = document.getElementById("createListingBtn");
-        createListingBtn.addEventListener("click", toggleForm);
+      var imageUploadForm = document.getElementById("imageUploadForm");
+      var createListingBtn = document.getElementById("createListingBtn");
+      createListingBtn.addEventListener("click", toggleForm);
 
-        function toggleForm(){
-            if(imageUploadForm.style.display == "none") {
-                imageUploadForm.style.display = "block";
-            } else {
-                imageUploadForm.style.display = "none";
-            }
+      function toggleForm() {
+        if (imageUploadForm.style.display == "none") {
+          imageUploadForm.style.display = "block";
+        } else {
+          imageUploadForm.style.display = "none";
         }
+      }
+
+      function deleteItem() {
+        var deleteItemForm = document.getElementById("deleteItemForm")
+
+        if(confirm("CONFIRM ACTION : DELETE ITEM LISTING")){
+          deleteItemForm.submit();
+        }
+      }
+
     </script>
-</body>
+  </body>
 </html>

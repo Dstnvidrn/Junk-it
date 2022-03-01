@@ -22,12 +22,7 @@ public class MessageService {
     private UserService userService;
 
     public List<Message> findAllByReceiverUserId (Long userId) {
-        User user = userService.findById(userId);
         List<Message> messagesList = messageRepository.findAllByReceiverUserId(userId);
-        for (Message message: messagesList) {
-            System.out.println(message.getMessageId());
-        }
-
         return messagesList;
     }
 

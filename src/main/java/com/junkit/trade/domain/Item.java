@@ -23,7 +23,7 @@ public class Item {
 	private String description;
 	
 	@Column(name="item_price")
-	private int itemPrice;
+	private double itemPrice;
 	
 	@Column(name="post_date")
 	private LocalDate postDate;
@@ -60,11 +60,11 @@ public class Item {
 		this.description = description;
 	}
 
-	public Integer getItemPrice() {
+	public double getItemPrice() {
 		return itemPrice;
 	}
 
-	public void setItemPrice(Integer itemPrice) {
+	public void setItemPrice(double itemPrice) {
 		this.itemPrice = itemPrice;
 	}
 

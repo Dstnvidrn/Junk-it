@@ -60,7 +60,8 @@ html{
 }
 
 .item-table-div{
-  height: 125px;  
+  
+  height: 150px;  
   overflow-y: auto;
   overflow-x: hidden;
   position: relative;

@@ -26,6 +26,7 @@ body {
     justify-content: space-between;
 }
 .listingBox{
+
 margin: 20px;
 border-radius: 10px;
 border-style: groove;
@@ -52,7 +53,7 @@ color:rgb(255,140,25);
 .footer{
     display: flex;
     justify-content: center;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 100%;
 

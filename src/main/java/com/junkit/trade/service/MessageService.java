@@ -2,6 +2,7 @@ package com.junkit.trade.service;
 
 
 import com.junkit.trade.MessageDto;
+import com.junkit.trade.domain.Item;
 import com.junkit.trade.domain.Message;
 import com.junkit.trade.domain.User;
 import com.junkit.trade.repository.MessageRepository;
@@ -20,6 +21,8 @@ public class MessageService {
     private MessageRepository messageRepository;
     @Autowired
     private UserService userService;
+    @Autowired
+    private ItemService itemService;
 
     public List<Message> findAllByReceiverUserId (Long userId) {
         List<Message> messagesList = messageRepository.findAllByReceiverUserId(userId);
@@ -33,6 +36,17 @@ public class MessageService {
         newMessage.setTimeSent(LocalDateTime.now());
         save(newMessage);
     }
+
+    public void messageItemOwner(User loggedInUser, Long itemId, Message newMessage) {
+        Item itemInquiredOn = itemService.findById(itemId);
+        User itemOwner = userService.findById(itemInquiredOn.getUser().getUserId());
+        newMessage.setItem(itemInquiredOn);
+        newMessage.setReceiver(itemOwner);
+        newMessage.setSender(loggedInUser);
+        newMessage.setTimeSent(LocalDateTime.now());
+        save(newMessage);
+    }
+
 
     public MessageDto createReplyMessage(MessageDto messageDto) {
         Message newMessage = new Message();

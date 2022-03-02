@@ -129,19 +129,17 @@
           </div>
         </footer>
       </main>
-
-  <script>
-    var markSoldForm = document.getElementById("markSoldForm");
-    var soldBtn = document.getElementById("soldBtn");
-    soldBtn.addEventListener("click", sellItem);
-
-      function sellItem() {
-        if(confirm("\tCONFIRM ACTION: MARK ITEM SOLD?")){
-          markSoldForm.submit();
-        }
-      }
-  </script>
-
+      <script>
+        var markSoldForm = document.getElementById("markSoldForm");
+        var soldBtn = document.getElementById("soldBtn");
+        soldBtn.addEventListener("click", sellItem);
+    
+          function sellItem() {
+            if(confirm("\tCONFIRM ACTION: MARK ITEM SOLD?")){
+              markSoldForm.submit();
+            }
+          }
+      </script>
     </div>
 
                   <!--THE FOLLOWING IS DISPLAYED WHEN THE LOGGED IN USER IS VISITING ANOTHER USERS PROFILE/LISTING -->
@@ -195,9 +193,11 @@
         
         <section class="main-content">
           <div class="form-content">
-            <!--  -->
+            
             <form id="item-update-form" th:action="@{/profile/{userId}/listings/{itemId}/update(userId=${loggedUser.userId}, itemId=${item.itemId})}" method="post">
               
+              </p>
+              <p th:inline="text"><strong>[[${item.available} ? 'Availability: Available' : 'Availability: Sold']]</strong>                
               </p>
               <p>
                 <label>Item Name</label>                
@@ -213,19 +213,26 @@
                 <input class="inputFields" type="number" th:field="${item.itemPrice}" placeholder="Price ($USD)"
                 step="0.25" value="0.00" id="itempricing" min="0" readonly />
               </p>
-              <p th:inline="text"><strong>[[${item.available} ? 'Availability: Available' : 'Availability: Sold']]</strong>                
-              </p>
+              
               <p>
                 <textarea placeholder="Junk Description" th:field="${item.description}" maxlength="200" id="description" readonly
               ></textarea> 
               </p>
             </form>
             <form th:action="@{/profile/{userId}(userId=${user.userId})}" method="get">
-                <input type="submit" class="button" value="Contact" style="margin-left:10px" id="contactBtn">
+                <input type="submit" class="button" value="Visit Profile" style="margin-left:10px;width: fit-content;" id="contactBtn">
+                <input type="button" class="button" value="Message" style="margin-left:10px" id="messageBtn" onclick="displayMessageForm()">
                 <input type= "hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                 <input type="hidden" th:field="${item.postDate}">
                 <input type="hidden" th:field="${item.available}">
                 <input type="hidden" th:field="${item.photo}">
+              </form>
+              <form th:action="@{/profile/{userId}/listings/{itemId}/message(userId=${loggedUser.userId}, itemId=${item.itemId})}" method="post" style="display: none;" id="messageForm">
+              <input type= "hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">                
+                <input type="text" id="message-txt-box" th:field="${message.messageText}">
+                <input id="messageInputButton" type="submit" value="Send" class="button"/>
+                
+                
               </form>
             <div>
             <img th:src="${item.photo}" th:alt="${item.description}" id="imageid-vistor">
@@ -238,11 +245,29 @@
             <img src="/images/junkit-banner.png" style="width: 100px" />
           </div>
         </footer>
-      </main>
-    </div>
+      </main>      
+      <script>
+        var messageForm = document.getElementById("messageForm");
+        var messageSendBtn = document.getElementById("messageInputButton");
+        var messageInputBox = document.getElementById("message-txt-box");
+        messageInputBox.addEventListener("keypress",submitMessage);
+        messageSendBtn.addEventListener("click", submitMessage);
 
-    
-    </script>
+        function displayMessageForm() {
+          if(messageForm.style.display == "none"){
+            messageForm.style.display = "block";
+          } else {
+            messageForm.style.display = "none";
+          }
+        }
+
+        function submitMessage(event){
+          if((event.keyCode === 13 && messageInputBox.value != '') || (event.type == "click" && messageInputBox.value != '')){
+            messageForm.submit();
+          }
+        }
+      </script>
+    </div>
 
     </body>
     </html>

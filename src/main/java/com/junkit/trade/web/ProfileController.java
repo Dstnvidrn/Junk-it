@@ -90,7 +90,11 @@ public class ProfileController {
         return messageService.createReplyMessage(newMessage);
     }
 
-
+    @PostMapping("/profile/{userId}/listings/{itemId}/message")
+    public String sendMessageAboutItem(@AuthenticationPrincipal User loggedInUser, @PathVariable Long itemId,  Message newMessage) {
+        messageService.messageItemOwner(loggedInUser, itemId, newMessage);
+        return "redirect:/profile/" + loggedInUser.getUserId() + "/listings/" + itemId;
+    }
 
 
 

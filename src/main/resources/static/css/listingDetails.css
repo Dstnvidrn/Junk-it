@@ -56,7 +56,7 @@ html{
     max-width: 300px;
     position: absolute;
     bottom: 55vh;
-    left:35vw
+    left:25vw
   }
   #imageid-vistor{
     border: #666;
@@ -65,9 +65,9 @@ html{
     border-style: groove;
     max-height: 250px;
     max-width: 300px;
-    position: relative;
-    bottom: 20vh;
-    right: 20vw;
+    position: fixed;
+    right: 60vw;
+    bottom: 55vh;
     overflow: hidden;
   }
 
@@ -116,8 +116,23 @@ html{
   color: blanchedalmond;
   width: 750px;
   border-radius: 10px;
-  border-collapse: separate;
-  
+  border-collapse: separate;  
+}
+
+#message-txt-box {
+  position: relative;
+  top:20px;
+  width: 390px;
+  border-radius: 10px;
+}
+
+#messageInputButton{
+  position: relative;
+  top:20px;
+  padding: 0;
+  width: 60px;
+  height: 20px;
+  border-radius: 10px;    
 }
 .form-content{
   position: relative;

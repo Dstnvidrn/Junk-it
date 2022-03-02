@@ -53,7 +53,7 @@ color:rgb(255,140,25);
 .footer{
     display: flex;
     justify-content: center;
-    position: static;
+    position: absolute;
     bottom: 0;
     width: 100%;
 

@@ -102,6 +102,7 @@
             </div>
             <div sec:authorize="isAuthenticated()" style="flex-grow: 5">
                 <form action="/logout" method="post">
+                    <a th:href="@{/profile/{userId}(userId=${loggedUser.userId})}" style="margin-right: 75px;">Profile</a>
                     <input type="submit" value="Sign Out" class="button">
                     <input type= "hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                 </form>

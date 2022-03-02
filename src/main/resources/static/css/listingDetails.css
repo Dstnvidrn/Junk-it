@@ -45,25 +45,30 @@ html{
   width: 390px;
   border-radius: 10px;
 }
+
+
   #imageid-owner{
     border: #666;
     border-radius: 20px;
     border-width: 2px;
     border-style: groove;
+    max-height: 250px;
     max-width: 300px;
-    position: relative;
-    bottom: 50vh;
-    left:10vw
+    position: absolute;
+    bottom: 55vh;
+    left:35vw
   }
   #imageid-vistor{
     border: #666;
     border-radius: 20px;
     border-width: 2px;
     border-style: groove;
+    max-height: 250px;
     max-width: 300px;
     position: relative;
-    bottom: 40vh;
-    right: 25vw;
+    bottom: 20vh;
+    right: 20vw;
+    overflow: hidden;
   }
 
 .sidebar-btn {

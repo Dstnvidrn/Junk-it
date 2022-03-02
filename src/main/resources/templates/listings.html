@@ -123,26 +123,14 @@
                 placeholder="Image URL"
               />
               <br />
-              <input
-                class="inputFields"
+              <input class="inputFields"
                 type="number"
                 th:field="${item.itemPrice}"
                 placeholder="Price ($USD)"
-                step="0.25"
+                step="any"
                 value="0.00"
                 id="itempricing"
-                min="0.00"
-              />
-              <br />
-              <input
-                class="inputFields"
-                type="number"
-                th:field="${item.quantity}"
-                placeholder="Quantity"
-                step="1"
-                value="1"
-                id="itemQuantity"
-                min="1"
+                min="0"
               />
               <br />
               <input
@@ -191,6 +179,8 @@
       var imageUploadForm = document.getElementById("imageUploadForm");
       var createListingBtn = document.getElementById("createListingBtn");
       createListingBtn.addEventListener("click", toggleForm);
+
+      
 
       function toggleForm() {
         if (imageUploadForm.style.display == "none") {

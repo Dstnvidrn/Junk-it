@@ -55,13 +55,18 @@
 			</div>
 		</div>
 
-
-		<div th:each="item : ${listings}" class="main-content">
+		<div class="main-content">
+		<div th:if="${#lists.size(listings)} > 0" th:each="item : ${listings}" >
 			<div class="listingBox" >
-
-			</div> <!--  For each list, create a box for it -->
+				<a th:href="@{/profile/{userId}/listings/{itemId}(userId=${item.user.userId}, itemId=${item.itemId})}" style="color: rgb(38,0,77)">
+					<p th:text="${item.itemName}" id="item-name"></p>
+				<img th:src="${item.photo}" style="width: 210px; height: 290px; border-radius: 15px;" id="imageid">
+				</a>
+				<p th:inline="text">$[[${item.itemPrice}]]</p>
+				
+			</div>
 		</div>
-
+		</div>
 		<div class="footer">
 			<div>
 				<img src="/images/junkit-banner.png" style="width: 100px;"/>

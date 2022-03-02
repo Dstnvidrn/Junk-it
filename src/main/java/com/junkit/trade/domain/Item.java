@@ -23,7 +23,7 @@ public class Item {
 	private String description;
 	
 	@Column(name="item_price")
-	private Double itemPrice;
+	private int itemPrice;
 	
 	@Column(name="post_date")
 	private LocalDate postDate;
@@ -31,11 +31,6 @@ public class Item {
 	@Column(name="isAvailable")
 	private Boolean isAvailable;
 
-	@Column(name = "quantity")
-	private Integer quantity;
-
-	public Item() {
-	}
 
 
 	@ManyToOne
@@ -65,11 +60,11 @@ public class Item {
 		this.description = description;
 	}
 
-	public Double getItemPrice() {
+	public Integer getItemPrice() {
 		return itemPrice;
 	}
 
-	public void setItemPrice(Double itemPrice) {
+	public void setItemPrice(Integer itemPrice) {
 		this.itemPrice = itemPrice;
 	}
 
@@ -105,11 +100,5 @@ public class Item {
 		isAvailable = available;
 	}
 
-	public Integer getQuantity() {
-		return quantity;
-	}
 
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
-	}
 }
